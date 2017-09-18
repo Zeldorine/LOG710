@@ -60,7 +60,7 @@ AS       := as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.c$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) 
 
 
 
@@ -91,13 +91,13 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/main.c$(ObjectSuffix): main.c $(IntermediateDirectory)/main.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB01/RunCmd/main.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/main.c$(DependSuffix): main.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.c$(ObjectSuffix) -MF$(IntermediateDirectory)/main.c$(DependSuffix) -MM main.c
+$(IntermediateDirectory)/runCmd.c$(ObjectSuffix): runCmd.c $(IntermediateDirectory)/runCmd.c$(DependSuffix)
+	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB01/RunCmd/runCmd.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/runCmd.c$(DependSuffix): runCmd.c
+	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) -MF$(IntermediateDirectory)/runCmd.c$(DependSuffix) -MM runCmd.c
 
-$(IntermediateDirectory)/main.c$(PreprocessSuffix): main.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.c$(PreprocessSuffix) main.c
+$(IntermediateDirectory)/runCmd.c$(PreprocessSuffix): runCmd.c
+	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/runCmd.c$(PreprocessSuffix) runCmd.c
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
