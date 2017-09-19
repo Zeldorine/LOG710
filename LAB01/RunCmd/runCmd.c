@@ -53,7 +53,7 @@ int main(int argc, char **argv)
             break;
         
         case 0 :
-            childProcessFct(argc, argv);
+            childProcessFct(&argc, argv);
             break;
             
         default:
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	return SUCCESS;
 }
 
-void childProcessFct(int argc, char **argv) {
+void childProcessFct(int* argc, char **argv) {
 	execvp(argv[1], &argv[1]);
 	printf("Erreur %s \n",strerror(errno));
 	fflush(stdout);
@@ -86,26 +86,28 @@ void parentProcessFct() {
         exit(ERROR_GETRUSAGE); 
     }
     
-    struct timeval wcTime = getWallClockTime(startTime, endTime);
+    struct timeval wcTime;
+    getWallClockTime(&wcTime, &startTime, &endTime);
     
-    // Display stats of execution.
-    printf("+-----\n");
-    printf("| Temps Wallclock : %ld seconds, %ld microseconds\n", wcTime.tv_sec , wcTime.tv_usec / (long) 1000); /*  user CPU time used */
-    printf("| Temps CPU : %li seconds, %ld microseconds\n", usage.ru_stime.tv_sec, usage.ru_stime.tv_usec / (long) 1000); /* system CPU time used */
-    printf("| Commutation de context : %li\n", (usage.ru_nvcsw + usage.ru_nivcsw));
-    printf("| Defaults de pages : %li\n", usage.ru_majflt); /* page faults (hard page faults) */
-    printf("| Pages reclamees : %li\n", usage.ru_minflt); /* page reclaims (soft page faults) */
-    printf("+-----\n");
+    displayStats(&wcTime, &usage);
 }
 
-struct timeval getWallClockTime(struct timeval startTime, struct timeval endTime){
-    long microseconds = (endTime.tv_sec - startTime.tv_sec) * (long)1000000 + ((long)endTime.tv_usec - (long)startTime.tv_usec);
+void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime){
+    long microseconds = (endTime->tv_sec - startTime->tv_sec) * (long)1000000 + ((long)endTime->tv_usec - (long)startTime->tv_usec);
     
-    struct timeval wallClockTime;
-    wallClockTime.tv_sec = microseconds / (long)1000000;
-    wallClockTime.tv_usec = microseconds % (long)1000000;
-    
-    return wallClockTime;
+    wallClockTime->tv_sec = microseconds / (long)1000000;
+    wallClockTime->tv_usec = microseconds % (long)1000000;
+}
+
+void displayStats(struct timeval* wcTime, struct rusage* usage){
+        // Display stats of execution.
+    printf("+-----\n");
+    printf("| Temps Wallclock : %ld seconds, %ld microseconds\n", wcTime->tv_sec , wcTime->tv_usec / (long) 1000); /*  user CPU time used */
+    printf("| Temps CPU : %li seconds, %ld microseconds\n", usage->ru_stime.tv_sec, usage->ru_stime.tv_usec / (long) 1000); /* system CPU time used */
+    printf("| Commutation de context : %li\n", (usage->ru_nvcsw + usage->ru_nivcsw));
+    printf("| Defaults de pages : %li\n", usage->ru_majflt); /* page faults (hard page faults) */
+    printf("| Pages reclamees : %li\n", usage->ru_minflt); /* page reclaims (soft page faults) */
+    printf("+-----\n");
 }
 
 /*char* getCmd(char** argv) {

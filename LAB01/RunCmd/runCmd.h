@@ -1,4 +1,5 @@
 #include <sys/time.h>
+#include <sys/resource.h>
 
 // Return code part
 int SUCCESS = 0;
@@ -13,7 +14,7 @@ int ERROR_GETRUSAGE = 4;
  * @param argc
  * @param argv
  */
-void childProcessFct(int argc, char **argv);
+void childProcessFct(int* argc, char **argv);
 
 /**
  * @brief 
@@ -26,4 +27,11 @@ void parentProcessFct();
  * @param endTime
  * @return 
  */
-struct timeval getWallClockTime(struct timeval startTime, struct timeval endTime);
+void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime);
+
+/**
+ * @brief 
+ * @param wcTime
+ * @param usage
+ */
+void displayStats(struct timeval* wcTime, struct rusage* usage);
