@@ -15,6 +15,7 @@
 *
 * VERSION   DATE        WHO         DETAIL
 *     1.0   18/09/2017  TC & MN     Add execvp function and fork. 
+*     1.1   19/09/2017  TC & MN     Add display informations function with rusage struct. 
 *
 *H*/
 
@@ -53,7 +54,7 @@ int main(int argc, char **argv)
             break;
         
         case 0 :
-            childProcessFct(&argc, argv);
+            childProcessFct(argv);
             break;
             
         default:
@@ -64,13 +65,20 @@ int main(int argc, char **argv)
 	return SUCCESS;
 }
 
-void childProcessFct(int* argc, char **argv) {
+/**
+ * @brief 
+ * @param argv
+ */
+void childProcessFct(char **argv) {
 	execvp(argv[1], &argv[1]);
-	printf("Erreur %s \n",strerror(errno));
+	printf("Erreur during execvp %s \n", strerror(errno));
 	fflush(stdout);
     exit(ERROR_EXECVP);
 }
 
+/**
+ * @brief 
+ */
 void parentProcessFct() {
     struct timeval startTime, endTime;
     gettimeofday(&startTime, NULL);
@@ -92,6 +100,12 @@ void parentProcessFct() {
     displayStats(&wcTime, &usage);
 }
 
+/**
+ * @brief 
+ * @param wallClockTime
+ * @param startTime
+ * @param endTime
+ */
 void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime){
     long microseconds = (endTime->tv_sec - startTime->tv_sec) * (long)1000000 + ((long)endTime->tv_usec - (long)startTime->tv_usec);
     
@@ -99,32 +113,19 @@ void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, 
     wallClockTime->tv_usec = microseconds % (long)1000000;
 }
 
+/**
+ * @brief 
+ * @param wcTime
+ * @param usage
+ */
 void displayStats(struct timeval* wcTime, struct rusage* usage){
         // Display stats of execution.
     printf("+-----\n");
-    printf("| Temps Wallclock : %ld seconds, %ld microseconds\n", wcTime->tv_sec , wcTime->tv_usec / (long) 1000); /*  user CPU time used */
-    printf("| Temps CPU : %li seconds, %ld microseconds\n", usage->ru_stime.tv_sec, usage->ru_stime.tv_usec / (long) 1000); /* system CPU time used */
-    printf("| Commutation de context : %li\n", (usage->ru_nvcsw + usage->ru_nivcsw));
+    printf("| Temps Wallclock : %li seconds, %li microseconds\n", wcTime->tv_sec , wcTime->tv_usec / (long) 1000); /*  user CPU time used */
+    printf("| Temps CPU : %li seconds, %li microseconds\n", usage->ru_stime.tv_sec, usage->ru_stime.tv_usec / (long) 1000); /* system CPU time used */
+    printf("| Commutation de context involontaire : %li\n", (usage->ru_nivcsw)); /* involuntary context switches */
+    printf("| Commutation de context volontaire : %li\n", (usage->ru_nvcsw)); /* voluntary context switches */
     printf("| Defaults de pages : %li\n", usage->ru_majflt); /* page faults (hard page faults) */
     printf("| Pages reclamees : %li\n", usage->ru_minflt); /* page reclaims (soft page faults) */
     printf("+-----\n");
 }
-
-/*char* getCmd(char** argv) {
-	return argv[1];
-}
-
-char** getCmdArgs(int argc, char** argv) {
-	char** arg = (char**) malloc((argc - 1) * sizeof(char*));
-	
-	int i = 2;
-	for (i; i < argc; i++) {
-		arg[i - 2] = (char*) malloc(sizeof(argv[i]));
-		arg[i - 2] = argv[i];
-	}
-	printf("%d\n", sizeof(arg));
-	fflush(stdout);
-	arg[i - 2] = NULL;
-	
-   return arg;
-}*/

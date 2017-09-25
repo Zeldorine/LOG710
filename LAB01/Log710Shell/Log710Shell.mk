@@ -3,10 +3,10 @@
 ## any manual changes will be erased      
 ##
 ## Debug
-ProjectName            :=RunCmd
+ProjectName            :=Log710Shell
 ConfigurationName      :=Debug
 WorkspacePath          :=/home/zeldorine/LOG710/LOG710/LAB01
-ProjectPath            :=/home/zeldorine/LOG710/LOG710/LAB01/RunCmd
+ProjectPath            :=/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
@@ -32,7 +32,7 @@ Preprocessors          :=
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E 
-ObjectsFileList        :="RunCmd.txt"
+ObjectsFileList        :="Log710Shell.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  
@@ -60,7 +60,7 @@ AS       := as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix) 
 
 
 
@@ -91,13 +91,13 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/runCmd.c$(ObjectSuffix): runCmd.c $(IntermediateDirectory)/runCmd.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB01/RunCmd/runCmd.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/runCmd.c$(DependSuffix): runCmd.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) -MF$(IntermediateDirectory)/runCmd.c$(DependSuffix) -MM runCmd.c
+$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix): Log710Shell.c $(IntermediateDirectory)/Log710Shell.c$(DependSuffix)
+	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell/Log710Shell.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Log710Shell.c$(DependSuffix): Log710Shell.c
+	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix) -MF$(IntermediateDirectory)/Log710Shell.c$(DependSuffix) -MM Log710Shell.c
 
-$(IntermediateDirectory)/runCmd.c$(PreprocessSuffix): runCmd.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/runCmd.c$(PreprocessSuffix) runCmd.c
+$(IntermediateDirectory)/Log710Shell.c$(PreprocessSuffix): Log710Shell.c
+	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Log710Shell.c$(PreprocessSuffix) Log710Shell.c
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

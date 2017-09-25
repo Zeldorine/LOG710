@@ -14,7 +14,7 @@ int ERROR_GETRUSAGE = 4;
  * @param argc
  * @param argv
  */
-void childProcessFct(int* argc, char **argv);
+void childProcessFct(char **argv);
 
 /**
  * @brief 
