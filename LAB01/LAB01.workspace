@@ -2,16 +2,19 @@
 <CodeLite_Workspace Name="LAB01" Database="" Version="10.0.0">
   <Project Name="RunCmd" Path="RunCmd/RunCmd.project" Active="No"/>
   <Project Name="Log710Shell" Path="Log710Shell/Log710Shell.project" Active="Yes"/>
+  <Project Name="Log710Shell2" Path="Log710Shell2/Log710Shell2.project"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
       <Project Name="RunCmd" ConfigName="Debug"/>
       <Project Name="Log710Shell" ConfigName="Debug"/>
+      <Project Name="Log710Shell2" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="RunCmd" ConfigName="Release"/>
       <Project Name="Log710Shell" ConfigName="Release"/>
+      <Project Name="Log710Shell2" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

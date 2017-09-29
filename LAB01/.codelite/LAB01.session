@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session Name="/home/zeldorine/LOG710/LOG710/LAB01/LAB01.workspace">
-  <int Value="1" Name="m_selectedTab"/>
+  <int Value="0" Name="m_selectedTab"/>
   <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/LAB01.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
-      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell/Log710Shell.h" Name="FileName"/>
-      <int Value="12" Name="FirstVisibleLine"/>
-      <int Value="34" Name="CurrentLine"/>
+      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell2/Log710Shell2.h" Name="FileName"/>
+      <int Value="54" Name="FirstVisibleLine"/>
+      <int Value="79" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell/Log710Shell.c" Name="FileName"/>
-      <int Value="73" Name="FirstVisibleLine"/>
-      <int Value="103" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/RunCmd/runCmd.c" Name="FileName"/>
-      <int Value="48" Name="FirstVisibleLine"/>
-      <int Value="56" Name="CurrentLine"/>
+      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell2/Log710Shell2.c" Name="FileName"/>
+      <int Value="190" Name="FirstVisibleLine"/>
+      <int Value="162" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
