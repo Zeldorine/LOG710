@@ -19,10 +19,10 @@
 *H*/
 
 #include "Log710Shell2.h"
-#include "string.h"   // pour le type pid_t
-#include <unistd.h>		// pour fork
+#include "string.h" // pour le type pid_t
+#include <unistd.h>	 // pour fork
 #include <sys/wait.h>
-#include <stdio.h>		// pour perror, printf
+#include <stdio.h> // pour perror, printf
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/time.h>
@@ -38,20 +38,19 @@ int backgroundProcessListCounter = 0;
  * @param argv
  * @return 
  */
-int main(int argc, char **argv) 
-{
-    //backgroundProcessList = calloc(MAX_BACKGROUNG_PROCESS, sizeof(struct BackgroundProcess));
+int main(int argc, char **argv) {
     executShell();
+	
 	return SUCCESS;
 }
 
 /**
  * @brief 
  */
-void executShell(){   
-    int runInBackground;
+void executShell() {   
+    int runInBackground = FALSE;
         
-    while(TRUE){
+    while(TRUE) {
         // Display prompt
         printf("Log710A2017%>");
         fflush(stdout);
@@ -63,45 +62,45 @@ void executShell(){
         // Remove \n
         if (inputArg[strlen(inputArg) - 1] == '\n')
             inputArg[strlen(inputArg) - 1] = '\0';
+			
+		// Remove &
+		// Task to be executed in background
+		if (inputArg[strlen(inputArg) - 1] == '&') {
+            inputArg[strlen(inputArg) - 1] = '\0';
+			runInBackground = TRUE;
+		}
             
-        // Trim the input to prevent to execute empty command
+        // Trim the input to prevent executing empty command
         trim(inputArg);
             
-        // Checks args before to process to make sure a command is provided by the user
+        // Check if a command is provided by the user
         if (strlen(inputArg) == 0) {
             printf("A command must be specify in argument\n");
             fflush(stdout);
             continue;
         }
-        
-        // Check if it should be execute in background
+		
+        // Check if task to be executed in background
         struct BackgroundProcess currentProcess;
-        if (inputArg[strlen(inputArg) - 1] == '&') {
-            inputArg[strlen(inputArg) - 1] = '\0';
-            printf("Run in background\n");
-            fflush(stdout);
-            
-            runInBackground = TRUE;
+        if (runInBackground) {
             currentProcess.cmd = malloc(strlen(inputArg) * sizeof(char*));
             strcpy(currentProcess.cmd, inputArg);
-            fflush(stdout);
         }
-        else {
-            runInBackground = FALSE;
-        }
-        
+		
         // Create command
-        char **cmd = getCmdArgs(inputArg);
-        
-        // Verify if execute command in parent
+        char** cmd = getCmdArgs(inputArg);
+		printf("cmd[0] = ''%s''\n", cmd[0]);
+        fflush(stdout);
+		
+        // Check if command has to be handled
         if(handleCommand(cmd) == TRUE){
             continue;
         }
         
         pid_t pid;
         printf("Before switch\n");
-            fflush(stdout);
-        switch(pid=fork()){
+		fflush(stdout);
+        switch(pid = fork()) {
             case -1:
                 perror("An error occured during fork()");
                 fflush(stderr);
@@ -122,12 +121,14 @@ void executShell(){
  * @brief 
  * @param cmd
  */
-int handleCommand(char **cmd){
+int handleCommand(char** cmd) {
     // EXIT
+	printf("cmd[0] = ''%s''\n", cmd[0]);
+	fflush(stdout);
     if(strcmp(cmd[0], EXIT_COMMAND) == 0) {
-        if(backgroundProcessListCounter > 0){
+        if(backgroundProcessListCounter > 0) {
             printf("Cannot exit now, there are %d tasks running in background. Waiting...", backgroundProcessListCounter);
-            // Wait all tache finish before to exit
+            // Wait for all tasks to finish before exiting
         } 
         
         exit(0);
@@ -136,6 +137,7 @@ int handleCommand(char **cmd){
     else if(strcmp(cmd[0], CD_COMMAND) == 0) {
         if (chdir(cmd[1]) < 0) {
             printf("Cannot move to %s\n", cmd[1]);
+			fflush(stdout);
         } else {
             char cwd[BUFFER_SIZE];
             getcwd(cwd, BUFFER_SIZE);
@@ -146,21 +148,23 @@ int handleCommand(char **cmd){
         return TRUE;
     } 
     // APTACHES
-    else if(strcmp(cmd[0], APTACHES_COMMAND) == 0){
-        if(backgroundProcessListCounter > 0){
-            for(int i=0; i<backgroundProcessListCounter;i++){
+    else if(strcmp(cmd[0], APTACHES_COMMAND) == 0) {
+        if(backgroundProcessListCounter > 0) {
+            for(int i = 0; i < backgroundProcessListCounter; i++) {
                 struct BackgroundProcess process = backgroundProcessList[i];
                 printf("%d %s\n", process.pid, process.cmd);
                 fflush(stdout);
             }
         }
     }
+	
+	return FALSE;
 }
 
 /**
  * @brief 
  */
-void checkBackgroundProcess(){
+void checkBackgroundProcess() {
     if(backgroundProcessListCounter > 0){
         // dont forget to free memory
     }
@@ -172,7 +176,7 @@ void checkBackgroundProcess(){
  */
 void childProcessFct(char **cmd, struct BackgroundProcess* currentProcess) {
     // If a current process is not null, we need to add it to the background process list
-    if(currentProcess){ 
+    if(currentProcess) { 
         currentProcess->pid = getpid();
         
         if(backgroundProcessListCounter == MAX_BACKGROUNG_PROCESS) {
@@ -195,7 +199,7 @@ void childProcessFct(char **cmd, struct BackgroundProcess* currentProcess) {
  * @brief 
  */
 void parentProcessFct(int* runInBackground) {
-    if(runInBackground){
+    if(runInBackground) {
         struct timeval startTime, endTime;
         gettimeofday(&startTime, NULL);
             
@@ -214,7 +218,7 @@ void parentProcessFct(int* runInBackground) {
         
         displayStats(&wcTime, &usage);
     } else {
-        // Don't wait execution and add procces id into the array
+        // Don't wait execution and add procces id inthe array
         
     }
 }
@@ -226,10 +230,10 @@ void parentProcessFct(int* runInBackground) {
  * @param endTime
  */
 void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime){
-    long microseconds = (endTime->tv_sec - startTime->tv_sec) * (long)1000000 + ((long)endTime->tv_usec - (long)startTime->tv_usec);
+    long microseconds = (endTime->tv_sec - startTime->tv_sec) * (long)1000000 + ((long) endTime->tv_usec - (long) startTime->tv_usec);
     
-    wallClockTime->tv_sec = microseconds / (long)1000000;
-    wallClockTime->tv_usec = microseconds % (long)1000000;
+    wallClockTime->tv_sec = microseconds / (long) 1000000;
+    wallClockTime->tv_usec = microseconds % (long) 1000000;
 }
 
 /**
@@ -257,11 +261,14 @@ void displayStats(struct timeval* wcTime, struct rusage* usage){
 char** getCmdArgs(char* inputArgs) {
     char* inputCopy = (char*) malloc(strlen(inputArgs) * sizeof(char*));
     char separator[2] = " ";
-    char *tmp; 
-    char *token; 
+    char* tmp; 
+    char* token; 
     int count = 0;
     
-    // Count nb element
+	printf("inputArgs = ''%s''\n", inputArgs);
+	fflush(stdout);
+	
+    // Count elements
     strcpy(inputCopy, inputArgs);
     tmp = strtok(inputCopy, separator);
     while(tmp != NULL){
@@ -269,8 +276,8 @@ char** getCmdArgs(char* inputArgs) {
         tmp = strtok(NULL, separator);
     }
 
-    //Create args
-    char **arg = calloc (count + 1, sizeof(char*));
+    // Create args
+    char** arg = calloc (count + 1, sizeof(char*));
     
     strcpy(inputCopy, inputArgs);
     token = strtok(inputCopy, separator);
@@ -285,10 +292,9 @@ char** getCmdArgs(char* inputArgs) {
 	arg[index] = NULL;
 	
     free(inputCopy);
-    free(separator);
     free(token);
     free(tmp);
-    
+	
     return arg;
 }
 
@@ -296,9 +302,9 @@ char** getCmdArgs(char* inputArgs) {
  * @brief 
  * @param stringToTrim
  */
-void *trim(char* stringToTrim){
+void *trim(char* stringToTrim) {
     int dest;
-    int src=0;
+    int src = 0;
     int len = strlen(stringToTrim);
 
     // Check if null
@@ -308,22 +314,17 @@ void *trim(char* stringToTrim){
     // Remove left whitespaces
     while(isspace(stringToTrim[src])) src++;
 
-    if(strlen(stringToTrim) == 0){
+    if(strlen(stringToTrim) == 0)
         return stringToTrim;
-    }
 
     // Copy the rest of the string to front of string and remove the last
-    if(src > 0){
-    for(dest=0; src<len; dest++, src++) 
-        {
-            stringToTrim[dest] = stringToTrim[src];
-            stringToTrim[src] = '\0';
-        }
-    }
+    if(src > 0)
+		for(dest=0; src<len; dest++, src++) {
+			stringToTrim[dest] = stringToTrim[src];
+			stringToTrim[src] = '\0';
+		}
 
     // Remove right whitespaces
-    for(dest=len-1; isspace(stringToTrim[dest]); --dest)
-    {
+    for(dest = len-  1; isspace(stringToTrim[dest]); --dest)
         stringToTrim[dest] = '\0';
-    }
 }
