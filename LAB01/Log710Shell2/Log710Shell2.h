@@ -20,8 +20,10 @@ const char APTACHES_COMMAND[9] = "aptaches";
 
 // Structure part
 struct BackgroundProcess{
+    int id;
     int pid;
     char* cmd;
+    struct timeval* startTime;
 };
 
 // Function part
@@ -35,12 +37,25 @@ void executShell();
  * @brief 
  * @param cmd
  */
-void childProcessFct(char **cmd, struct BackgroundProcess* currentProcess);
+void childProcessFct(char **cmd);
+
+/**
+ * @brief 
+ * @param currentProcess
+ */
+void executeBackgroundProcess(struct BackgroundProcess* currentProcess);
+
+/**
+ * @brief 
+ * @param cmd
+ * @param runInBackground
+ */
+void executeCommand(char *cmd, int runInBackground, struct BackgroundProcess* currentProcess);
 
 /**
  * @brief 
  */
-void parentProcessFct(int* runInBackground);
+void parentProcessFct();
 
 /**
  * @brief 

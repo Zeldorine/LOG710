@@ -2,22 +2,7 @@
 <Session Name="/home/zeldorine/LOG710/LOG710/LAB01/LAB01.workspace">
   <int Value="0" Name="m_selectedTab"/>
   <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/LAB01.workspace" Name="m_workspaceName"/>
-  <TabInfoArray Name="TabInfoArray">
-    <TabInfo>
-      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell2/Log710Shell2.h" Name="FileName"/>
-      <int Value="54" Name="FirstVisibleLine"/>
-      <int Value="79" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell2/Log710Shell2.c" Name="FileName"/>
-      <int Value="190" Name="FirstVisibleLine"/>
-      <int Value="162" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-  </TabInfoArray>
+  <TabInfoArray Name="TabInfoArray"/>
   <SerializedObject Name="m_breakpoints">
     <long Value="0" Name="Count"/>
   </SerializedObject>
