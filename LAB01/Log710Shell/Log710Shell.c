@@ -3,7 +3,7 @@
 *
 * DESCRIPTION :
 *       
-*
+* EQUIPE : 8
 *
 * AUTHOR :
 *       - Tony Cazorla
@@ -15,6 +15,7 @@
 *
 * VERSION   DATE        WHO         DETAIL
 *     1.0   25/09/2017  TC & MN     Add a boucle, input command, cd and exit commands. 
+*     1.1   03/10/2017  TC & MN     Add trim method.
 *
 *H*/
 
@@ -202,13 +203,17 @@ char** getCmdArgs(char* inputArgs) {
     int index = 0;
     while(token != NULL){
         arg[index] = (char*) malloc(sizeof(token));
-		arg[index] = token;
+		strcpy(arg[index], token);
         token = strtok(NULL, separator);
         index++;
     }
 
 	arg[index] = NULL;
 	
+    free(inputCopy);
+    free(token);
+    free(tmp);
+    
    return arg;
 }
 
