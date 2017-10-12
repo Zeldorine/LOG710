@@ -15,15 +15,13 @@
 * CHANGES :
 *
 * VERSION   DATE        WHO         DETAIL
-*     1.0   25/09/2017  TC & MN     Add Background struct, list of process and managing process 
-*     1.1   03/10/2017  TC & MN     Add trim method and create background process 
-*     1.2   10/10/2017  TC & MN     Fix bug when creating process (all process had the same adress) and 
+*     1.0   25/09/2017  TC & MN     Added Background struct, list of process and managing process. 
+*     1.1   03/10/2017  TC & MN     Added trim method and create background process .
+*     1.2   10/10/2017  TC & MN     Fixed bug when creating process (all process had the same adress) and 
 *                                   remove background process from the list when it finished.
 *                                   Fix bug for wallclock for background process.
-*                                   To verify :
-*                                       - Methode exit, wait all process before to quit
-*                                       - Display background process result
-*                                       - Check background process state in background
+*     1.3   11/10/2017  TC & MN     Added a signal handler to manage child death.
+*                                   Added a signal to remove wrong process if exec fail
 *
 */
 
@@ -40,6 +38,27 @@
 struct BackgroundProcess *backgroundProcessList[MAX_BACKGROUNG_PROCESS];
 int backgroundProcessListCounter = 0;
 
+
+void sig_handler(int sig) {
+    if(DEBUG){
+        printf("sig_handler, child died sig received: %d\n", sig);
+        fflush(stdout);
+    }
+    
+    checkBackgroundProcess();
+
+}
+
+void registerSignalHandler(){
+    struct sigaction sa;
+
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = sig_handler;
+
+
+    sigaction(SIGCHLD, &sa, NULL);
+}
+
 /**
  * @brief 
  * @param argc
@@ -47,32 +66,33 @@ int backgroundProcessListCounter = 0;
  * @return 
  */
 int main(int argc, char **argv) {
+    registerSignalHandler();
     executShell();
 	
 	return SUCCESS;
 }
 
-/**
- * @brief 
- */
 void executShell() {   
         
     while(TRUE) {
-        // Verify background process
-        checkBackgroundProcess();
-        
         // Display prompt
         int runInBackground = FALSE;
         printf(PROMPT);
         fflush(stdout);
         
         // Get command
-        char inputArg[BUFFER_SIZE];
-        fgets(inputArg, BUFFER_SIZE, stdin);
+        char inputArg[BUFFER_SIZE] = "";
+        char *resultReadCmd = fgets(inputArg, BUFFER_SIZE, stdin);
+        
+        // Continue if fgets return an error
+        if(!resultReadCmd){ 
+            continue;
+        }
         
         // Remove \n
-        if (inputArg[strlen(inputArg) - 1] == '\n')
+        if (inputArg[strlen(inputArg) - 1] == '\n') {
             inputArg[strlen(inputArg) - 1] = '\0';
+        }
 			
 		// Remove &
 		// Task to be executed in background
@@ -127,7 +147,7 @@ void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* c
             break;
         
         case 0 :
-            childProcessFct(cmd);
+            childProcessFct(cmd, currentProcess);
             break;
             
         default:
@@ -138,36 +158,42 @@ void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* c
                 currentProcess->pid = pid; 
                 struct timeval* time = malloc(sizeof(struct timeval));
                 gettimeofday(time, NULL);
-                printf("| Temps Wallclock : %li seconds, %li microseconds\n", time->tv_sec , time->tv_usec / (long) 1000);
-                fflush(stdout);
                 currentProcess->startTime = time;
             }
+
+            free(cmd);
 
             break;
     }
 }
 
-
-/**
- * @brief 
- * @param cmd
- */
-void childProcessFct(char **cmd) {  
+void childProcessFct(char **cmd, struct BackgroundProcess* currentProcess) {  
     if(DEBUG){
         printf("childProcessFct, cmd: %s\n", cmd[0]);
+        
+        if(currentProcess){
+            printf("currentProcess, cmd: %s and id: %d\n", currentProcess->cmd, currentProcess->id);
+        }
+        
         fflush(stdout);
     }
      
     execvp(cmd[0], &cmd[0]);
-	printf("Erreur - execvp: %s \n",strerror(errno));
-	fflush(stdout);
+    
+    // Display the wrong command
+	printf("\nAn error occured while executing execvp, the command ");
+
+    for(int i=0; cmd[i] != '\0'; i++){
+        printf("%s ", cmd[i]);
+    }
+
+    printf("doesn't exist\n", cmd[0]);
+    fflush(stdout);
+    free(cmd);
+    
+    exit(-1);
 }
 
-
-/**
- * @brief 
- * @param cmd
- */
 int handleCommand(char** cmd) {
     if(DEBUG){
         printf("handleCommand, arg cmd: %s\n", cmd[0]);
@@ -205,22 +231,25 @@ int handleCommand(char** cmd) {
     
     // APTACHES
     else if(strcmp(cmd[0], APTACHES_COMMAND) == 0) {
-        fflush(stdout);
-        if(backgroundProcessListCounter > 0) {
-            for(int i = 0; i < backgroundProcessListCounter; i++) {
-                struct BackgroundProcess* process = backgroundProcessList[i];
-                printf("[%d] %d %s\n", process->id,process->pid, process->cmd);
-                fflush(stdout);
-            }
-        } else {
-            printf("No task in background\n");
-            fflush(stdout);
-        }
+        displayBackgroundProcess();
         
         return TRUE;
     }
 	
 	return FALSE;
+}
+
+void displayBackgroundProcess(){
+    if(backgroundProcessListCounter > 0) {
+        for(int i = 0; i < backgroundProcessListCounter; i++) {
+            struct BackgroundProcess* process = backgroundProcessList[i];
+            printf("[%d] %d %s\n", process->id,process->pid, process->cmd);
+            fflush(stdout);
+        }
+    } else {
+        printf("No task in background\n");
+        fflush(stdout);
+    }
 }
 
 void waitingBackgroundProcess(){    
@@ -229,29 +258,28 @@ void waitingBackgroundProcess(){
         fflush(stdout);
     }
     
+    displayBackgroundProcess();
+    
     while(backgroundProcessListCounter > 0){
         checkBackgroundProcess();
-        sleep(1);
+        sleep(2);
     }
 }
 
-/**
- * @brief 
- */
 void checkBackgroundProcess() {
     if(DEBUG){
-        printf("checkBackgroundProcess\n");
+        printf("checkBackgroundProcess backgroundProcessListCounter = %d\n", backgroundProcessListCounter);
         fflush(stdout);
     }
     
-    printf("checkBackgroundProcess backgroundProcessListCounter = %d\n", backgroundProcessListCounter);
-    fflush(stdout);
     if(backgroundProcessListCounter > 0){
         for(int i = 0; i < backgroundProcessListCounter; i++) {
             struct BackgroundProcess* process = backgroundProcessList[i];
             
-            printf("\n Check process cmd:%s and pid: %d\n",process->cmd,process->pid);
-            fflush(stdout);
+            if(DEBUG){
+                printf("\n Check process cmd:%s and pid: %d\n",process->cmd,process->pid);
+                fflush(stdout);
+            }
             
             pid_t pid;
             int status;
@@ -260,37 +288,65 @@ void checkBackgroundProcess() {
                 printf("Wait no hang error for pid %d and status; %d\n",pid, status);
                 fflush(stdout);
             } else if (pid == 0){
-                printf("Child %d is still running \n",process->pid);
-                fflush(stdout);
+                if(DEBUG){
+                    printf("Child %d is still running \n",process->pid);
+                    fflush(stdout);
+                }
             } else {
                 if(WIFEXITED(status)){
-                    printf("Background process executed\n");
-                    printf("[%d] %d %s\n",process->id, process->pid, process->cmd);
+                    if(DEBUG){
+                        printf("Background process executed\n");
+                    }
+                    
+                    printf("\n[%d] %d %s\n",process->id, process->pid, process->cmd);
                     fflush(stdout);
                 } else {
-                    printf("Child %d exited with status of %d\n", WEXITSTATUS(status));
+                    printf("\n[%d] %d %s - exited with status of %d\n",process->id, process->pid, process->cmd, WEXITSTATUS(status));
                     fflush(stdout);
                 }
                 
                 displayCommandResult(*process->startTime);
                 
-                // remove process and free memory               
-                removeProcess(process); 
-                
-                if(backgroundProcessListCounter > 1){
-                    reorgBackgroundProcessList(i);
-                }
-                
-                backgroundProcessListCounter--;
+                removeProcessAtIndexFromList(process, i);
             }
         }
     }
+}
+
+void removeProcessAtIndexFromList(struct BackgroundProcess* processToRemove, int index){
+    if(!processToRemove){
+        printf("Cannot remove process null\n");
+        fflush(stdout);
+        return;
+    }
+    
+    if(DEBUG){
+        printf("removeProcessAtIndexFromList processToRemove pid = %d and index: %d\n", processToRemove->pid, index);
+        fflush(stdout);
+    }
+    
+    // remove process and free memory               
+    removeProcess(processToRemove); 
+    
+    // move all tasks after the current task to free memory
+    if(backgroundProcessListCounter > 1){
+        reorgBackgroundProcessList(index);
+    }
+    
+    backgroundProcessListCounter--;
 }
 
 void reorgBackgroundProcessList(int index){
     if(DEBUG){
         printf("reorgBackgroundProcessList, index: %d\n", index);
         fflush(stdout);
+    }
+    
+    // Verify index is valid
+    if(index < 0){
+        printf("Cannot reorg background process list from index: %d", index);
+        fflush(stdout);
+        return;
     }
     
     for(int i=index; i<backgroundProcessListCounter-1; i++){
@@ -332,16 +388,12 @@ void executeBackgroundProcess(struct BackgroundProcess* currentProcess) {
             char** cmd = getCmdArgs(currentProcess->cmd);
             executeCommand(cmd, TRUE, currentProcess);
 
-            printf("Process %d added with cmd %s\n", currentProcess->pid, currentProcess->cmd);
             printf("[%d] %d\n", currentProcess->id, currentProcess->pid);
             fflush(stdout);
         }
     }   
 }
 
-/**
- * @brief 
- */
 void parentProcessFct(pid_t pid) {
     if(DEBUG){
         printf("parentProcessFct\n");
@@ -378,12 +430,6 @@ void displayCommandResult(struct timeval startTime){
     displayStats(&wcTime, &usage);
 }
 
-/**
- * @brief 
- * @param wallClockTime
- * @param startTime
- * @param endTime
- */
 void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime){
     if(DEBUG){
         printf("getWallClockTime\n");
@@ -396,11 +442,6 @@ void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, 
     wallClockTime->tv_usec = microseconds % (long) 1000000;
 }
 
-/**
- * @brief 
- * @param wcTime
- * @param usage
- */
 void displayStats(struct timeval* wcTime, struct rusage* usage){
     if(DEBUG){
         printf("displayStats\n");
@@ -419,11 +460,6 @@ void displayStats(struct timeval* wcTime, struct rusage* usage){
     fflush(stdout);
 }
 
-/**
- * @brief 
- * @param inputArgs
- * @return 
- */
 char** getCmdArgs(char* inputArgs) {
     if(DEBUG){
         printf("getCmdArgs, inputArgs: %s\n", inputArgs);
@@ -467,10 +503,6 @@ char** getCmdArgs(char* inputArgs) {
     return arg;
 }
 
-/**
- * @brief 
- * @param stringToTrim
- */
 void *trim(char* stringToTrim) {
     if(DEBUG){
         printf("trim, stringToTrim: %s\n", stringToTrim);

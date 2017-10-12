@@ -2,7 +2,7 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 
-// Return code part
+// DEFINE PART
 #define SUCCESS 0
 #define ERROR_FORK 1
 #define ERROR_EXECVP 2
@@ -13,15 +13,16 @@
 #define FALSE 0
 #define BUFFER_SIZE  2048
 #define MAX_BACKGROUNG_PROCESS 128
-#define DEBUG 1
+#define DEBUG 0
 
-// Commands to manage
+// COMMAND TO MANAGE
 const char EXIT_COMMAND[5] = "exit";
 const char CD_COMMAND[3] = "cd";
 const char APTACHES_COMMAND[9] = "aptaches";
-const char PROMPT[14] = "Log710A2017%>";
+const char PROMPT[14] = "\nLog710A2017%>";
 
-// Structure part
+
+// STRUCTURE PART
 struct BackgroundProcess{
     int id;
     int pid;
@@ -29,7 +30,18 @@ struct BackgroundProcess{
     struct timeval* startTime;
 };
 
-// Function part
+
+
+// SIGNAL HANDLER PART
+void sig_handler(int sig);
+
+
+
+// FUNCTION PART
+/**
+ * @brief 
+ */
+void registerSignalHandler();
 
 /**
  * @brief 
@@ -40,7 +52,7 @@ void executShell();
  * @brief 
  * @param cmd
  */
-void childProcessFct(char **cmd);
+void childProcessFct(char **cmd, struct BackgroundProcess* currentProcess);
 
 /**
  * @brief 
@@ -98,3 +110,26 @@ void *trim(char* stringToTrim);
  * @brief 
  */
 void checkBackgroundProcess();
+
+/**
+ * @brief 
+ * @param process
+ */
+void removeProcessFromList(struct BackgroundProcess* processToRemove);
+
+/**
+ * @brief 
+ * @param process
+ * @param index
+ */
+void removeProcessAtIndexFromList(struct BackgroundProcess* processToRemove, int index);
+
+/**
+ * @brief 
+ */
+void displayBackgroundProcess();
+
+/**
+ * @brief 
+ */
+void waitingBackgroundProcess();

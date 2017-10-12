@@ -5,15 +5,15 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell2/Log710Shell2.h" Name="FileName"/>
-      <int Value="42" Name="FirstVisibleLine"/>
-      <int Value="55" Name="CurrentLine"/>
+      <int Value="31" Name="FirstVisibleLine"/>
+      <int Value="43" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell2/Log710Shell2.c" Name="FileName"/>
-      <int Value="117" Name="FirstVisibleLine"/>
-      <int Value="130" Name="CurrentLine"/>
+      <int Value="36" Name="FirstVisibleLine"/>
+      <int Value="62" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
