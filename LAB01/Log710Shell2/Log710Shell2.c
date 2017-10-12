@@ -1,9 +1,11 @@
  /***********************************************************************
-* FILENAME : runCmd.c 
+* FILENAME : Log710Shell2.c 
 *
-* DESCRIPTION :
+* DESCRIPTION : Lab part 3
+* 				The Shell must manage commands sent as background task.
+* 				The Shell must wait for all background tasks to finish before exiting.
+* 				The Shell must manage the "aptaches" command which lists all ongoing background tasks.
 *       
-*
 * EQUIPE : 8
 * 
 * AUTHOR :
@@ -15,56 +17,48 @@
 * CHANGES :
 *
 * VERSION   DATE        WHO         DETAIL
-*     1.0   25/09/2017  TC & MN     Added Background struct, list of process and managing process. 
-*     1.1   03/10/2017  TC & MN     Added trim method and create background process .
-*     1.2   10/10/2017  TC & MN     Fixed bug when creating process (all process had the same adress) and 
-*                                   remove background process from the list when it finished.
-*                                   Fix bug for wallclock for background process.
+*     1.0   25/09/2017  TC & MN     Added Background structure, list of process and process manager. 
+*     1.1   03/10/2017  TC & MN     Added trim method.
+* 									Added create background process method.
+*     1.2   10/10/2017  TC & MN     Fixed bug when creating process (all process had the same adress) .
+* 									Remove background process from the list when it finishes.
+*                                   Fixed bug for wallclock for background process.
 *     1.3   11/10/2017  TC & MN     Added a signal handler to manage child death.
-*                                   Added a signal to remove wrong process if exec fail
-*
-*/
+*                                   Added a signal to remove wrong process if exec fail.
+* 	  1.4	12/10/2017	TC & MN		Added the DOC.
+* 									Formatted for release.
+**/
 
 #include "Log710Shell2.h"
-#include "string.h" 
-#include <unistd.h>	 // pour fork
-#include <sys/wait.h>// pour le type pid_t
-#include <stdio.h> // pour perror, printf
-#include <stdlib.h>
-#include <errno.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 
-struct BackgroundProcess *backgroundProcessList[MAX_BACKGROUNG_PROCESS];
+struct BackgroundProcess* backgroundProcessList[MAX_BACKGROUNG_PROCESS];
 int backgroundProcessListCounter = 0;
 
-
+/**
+ * @brief Overrides the default behavior of SIGCHLD.
+ * @param sig Signal ID
+ */
 void sig_handler(int sig) {
-    if(DEBUG){
+    if(DEBUG) {
         printf("sig_handler, child died sig received: %d\n", sig);
         fflush(stdout);
     }
     
     checkBackgroundProcess();
-
 }
 
-void registerSignalHandler(){
+/**
+ * @brief Registers all signal handlers.
+ */
+void registerSignalHandler() {
     struct sigaction sa;
 
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = sig_handler;
 
-
     sigaction(SIGCHLD, &sa, NULL);
 }
 
-/**
- * @brief 
- * @param argc
- * @param argv
- * @return 
- */
 int main(int argc, char **argv) {
     registerSignalHandler();
     executShell();
@@ -72,6 +66,9 @@ int main(int argc, char **argv) {
 	return SUCCESS;
 }
 
+/**
+ * @brief Main loop for the Shell execution.
+ */
 void executShell() {   
         
     while(TRUE) {
@@ -108,6 +105,7 @@ void executShell() {
         if (strlen(inputArg) == 0) {
             printf("A command must be specify in argument\n");
             fflush(stdout);
+			
             continue;
         }
 		
@@ -116,8 +114,10 @@ void executShell() {
             struct BackgroundProcess* currentProcess = malloc(sizeof(struct BackgroundProcess));
             currentProcess->cmd = malloc(strlen(inputArg) * sizeof(char*));
             currentProcess->id = backgroundProcessListCounter+1;
+			
             strcpy(currentProcess->cmd, inputArg);
             executeBackgroundProcess(currentProcess);
+			
             continue;
         }
   
@@ -125,16 +125,21 @@ void executShell() {
         char** cmd = getCmdArgs(inputArg);
 
         // Check if command has to be handled
-        if(handleCommand(cmd) == TRUE){
+        if (handleCommand(cmd) == TRUE)
             continue;
-        }
     
         executeCommand(cmd, runInBackground, NULL);
     }
 }
 
-void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* currentProcess){
-    if(DEBUG){
+/**
+ * @brief Executes the command and creates a new process if needed.
+ * @param cmd The command to execute
+ * @param runInBackground Whether or not the command needs to be executed as a background task
+ * @param currentProcess The process structure to execute as a background task
+ */
+void executeCommand(char** cmd, int runInBackground, struct BackgroundProcess* currentProcess) {
+    if(DEBUG) {
         printf("executeCommand, arg cmd: %s, runInBackground: %d\n", cmd[0], runInBackground);
         fflush(stdout);
     }
@@ -144,17 +149,18 @@ void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* c
         case -1:
             perror("An error occured during fork()\n");
             fflush(stderr);
+			
             break;
         
         case 0 :
-            childProcessFct(cmd, currentProcess);
+            childProcessFct(cmd);
+			
             break;
             
         default:
-        
-            if(!runInBackground){
+            if(!runInBackground)
                 parentProcessFct(pid);
-            } else if(runInBackground && currentProcess){
+            else if(runInBackground && currentProcess) {
                 currentProcess->pid = pid; 
                 struct timeval* time = malloc(sizeof(struct timeval));
                 gettimeofday(time, NULL);
@@ -167,39 +173,38 @@ void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* c
     }
 }
 
-void childProcessFct(char **cmd, struct BackgroundProcess* currentProcess) {  
-    if(DEBUG){
-        printf("childProcessFct, cmd: %s\n", cmd[0]);
-        
-        if(currentProcess){
-            printf("currentProcess, cmd: %s and id: %d\n", currentProcess->cmd, currentProcess->id);
-        }
-        
-        fflush(stdout);
-    }
+/**
+ * @brief Executes the command as a child process.
+ * @param cmd The command to execute
+ */
+void childProcessFct(char** cmd) { 
      
     execvp(cmd[0], &cmd[0]);
     
     // Display the wrong command
 	printf("\nAn error occured while executing execvp, the command ");
 
-    for(int i=0; cmd[i] != '\0'; i++){
+    for(int i = 0; cmd[i] != '\0'; i++)
         printf("%s ", cmd[i]);
-    }
 
-    printf("doesn't exist\n", cmd[0]);
+    printf("doesn't exist\n");
     fflush(stdout);
+	
     free(cmd);
     
     exit(-1);
 }
 
+/**
+ * @brief Executes the command if it needs to be handled by the Shell.
+ * @param cmd The command to execute
+ * @return Whether or not the command was executed.
+ */
 int handleCommand(char** cmd) {
-    if(DEBUG){
+    if(DEBUG) {
         printf("handleCommand, arg cmd: %s\n", cmd[0]);
         fflush(stdout);
     }
-    
     
     // EXIT
     if(strcmp(cmd[0], EXIT_COMMAND) == 0) {
@@ -239,7 +244,10 @@ int handleCommand(char** cmd) {
 	return FALSE;
 }
 
-void displayBackgroundProcess(){
+/**
+ * @brief Displays current background tasks.
+ */
+void displayBackgroundProcess() {
     if(backgroundProcessListCounter > 0) {
         for(int i = 0; i < backgroundProcessListCounter; i++) {
             struct BackgroundProcess* process = backgroundProcessList[i];
@@ -252,31 +260,37 @@ void displayBackgroundProcess(){
     }
 }
 
-void waitingBackgroundProcess(){    
-    if(DEBUG){
+/**
+ * @brief Waits for all background tasks to finish.
+ */
+void waitingBackgroundProcess() {    
+    if(DEBUG) {
         printf("waitingBackgroundProcess\n");
         fflush(stdout);
     }
     
     displayBackgroundProcess();
     
-    while(backgroundProcessListCounter > 0){
+    while(backgroundProcessListCounter > 0) {
         checkBackgroundProcess();
         sleep(2);
     }
 }
 
+/**
+ * @brief Looks for finished background tasks and displays them.
+ */
 void checkBackgroundProcess() {
-    if(DEBUG){
+    if(DEBUG) {
         printf("checkBackgroundProcess backgroundProcessListCounter = %d\n", backgroundProcessListCounter);
         fflush(stdout);
     }
     
-    if(backgroundProcessListCounter > 0){
+    if(backgroundProcessListCounter > 0) {
         for(int i = 0; i < backgroundProcessListCounter; i++) {
             struct BackgroundProcess* process = backgroundProcessList[i];
             
-            if(DEBUG){
+            if(DEBUG) {
                 printf("\n Check process cmd:%s and pid: %d\n",process->cmd,process->pid);
                 fflush(stdout);
             }
@@ -284,17 +298,17 @@ void checkBackgroundProcess() {
             pid_t pid;
             int status;
            
-            if((pid = waitpid(process->pid, &status, WNOHANG)) == -1){
+            if((pid = waitpid(process->pid, &status, WNOHANG)) == -1) {
                 printf("Wait no hang error for pid %d and status; %d\n",pid, status);
                 fflush(stdout);
-            } else if (pid == 0){
-                if(DEBUG){
+            } else if (pid == 0) {
+                if(DEBUG) {
                     printf("Child %d is still running \n",process->pid);
                     fflush(stdout);
                 }
             } else {
-                if(WIFEXITED(status)){
-                    if(DEBUG){
+                if(WIFEXITED(status)) {
+                    if(DEBUG) {
                         printf("Background process executed\n");
                     }
                     
@@ -313,53 +327,67 @@ void checkBackgroundProcess() {
     }
 }
 
-void removeProcessAtIndexFromList(struct BackgroundProcess* processToRemove, int index){
-    if(!processToRemove){
+/**
+ * @brief Removes the process from the list.
+ * @param processToRemove The process to remove
+ * @param index The process' index
+ */
+void removeProcessAtIndexFromList(struct BackgroundProcess* processToRemove, int index) {
+    if(!processToRemove) {
         printf("Cannot remove process null\n");
         fflush(stdout);
+		
         return;
     }
     
-    if(DEBUG){
+    if(DEBUG) {
         printf("removeProcessAtIndexFromList processToRemove pid = %d and index: %d\n", processToRemove->pid, index);
         fflush(stdout);
     }
     
-    // remove process and free memory               
+    // Remove process and free memory               
     removeProcess(processToRemove); 
     
-    // move all tasks after the current task to free memory
-    if(backgroundProcessListCounter > 1){
+    // Move all tasks after the current task to free memory
+    if(backgroundProcessListCounter > 1)
         reorgBackgroundProcessList(index);
-    }
     
     backgroundProcessListCounter--;
 }
 
-void reorgBackgroundProcessList(int index){
-    if(DEBUG){
+/**
+ * @brief Shifts down all processes from the end to the given index.
+ * @param index The index
+ */
+void reorgBackgroundProcessList(int index) {
+    if(DEBUG) {
         printf("reorgBackgroundProcessList, index: %d\n", index);
         fflush(stdout);
     }
     
     // Verify index is valid
-    if(index < 0){
+    if(index < 0) {
         printf("Cannot reorg background process list from index: %d", index);
         fflush(stdout);
+		
         return;
     }
     
-    for(int i=index; i<backgroundProcessListCounter-1; i++){
+    for(int i = index; i < backgroundProcessListCounter - 1; i++)
         backgroundProcessList[i] = backgroundProcessList[i+1];
-    }
     
     printf("Remove last element after reorg array of process\n");
     fflush(stdout);
+	
     backgroundProcessList[backgroundProcessListCounter-1] = 0;
 }
 
-void removeProcess(struct BackgroundProcess* process){
-    if(DEBUG){
+/**
+ * @brief Removes a process from memory.
+ * @param process The process to remove
+ */
+void removeProcess(struct BackgroundProcess* process) {
+    if(DEBUG) {
         printf("removeProcess\n");
         fflush(stdout);
     }
@@ -369,8 +397,12 @@ void removeProcess(struct BackgroundProcess* process){
     free(process);
 }
 
+/**
+ * @brief Execute the command as a background task.
+ * @param currentProcess The process to execute
+ */
 void executeBackgroundProcess(struct BackgroundProcess* currentProcess) {
-    if(DEBUG){
+    if(DEBUG) {
         printf("executeBackgroundProcess\n");
         fflush(stdout);
     }
@@ -394,13 +426,17 @@ void executeBackgroundProcess(struct BackgroundProcess* currentProcess) {
     }   
 }
 
+/**
+ * @brief Waits for the child process to be finished and displays it.
+ * @param pid Child's process ID
+ */
 void parentProcessFct(pid_t pid) {
-    if(DEBUG){
+    if(DEBUG) {
         printf("parentProcessFct\n");
         fflush(stdout);
     }
     
-    struct timeval startTime, endTime;
+    struct timeval startTime;
     gettimeofday(&startTime, NULL);
         
     int status;
@@ -409,8 +445,12 @@ void parentProcessFct(pid_t pid) {
     displayCommandResult(startTime);
 }
 
-void displayCommandResult(struct timeval startTime){
-    if(DEBUG){
+/**
+ * @brief Displays a command's results.
+ * @param startTime The command's time at which it started
+ */
+void displayCommandResult(struct timeval startTime) {
+    if(DEBUG) {
         printf("displayCommandResult\n");
         fflush(stdout);
     }
@@ -421,7 +461,8 @@ void displayCommandResult(struct timeval startTime){
     struct rusage usage;
     // Get statistics for child of the calling process 
     if(getrusage(RUSAGE_CHILDREN, &usage) != 0){
-        perror("An error occured during getrusage()\n");  
+        perror("An error occured during getrusage()\n"); 
+		fflush(stderr); 
     }
     
     struct timeval wcTime;
@@ -430,8 +471,14 @@ void displayCommandResult(struct timeval startTime){
     displayStats(&wcTime, &usage);
 }
 
-void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime){
-    if(DEBUG){
+/**
+ * @brief Sets clock time.
+ * @param wallClockTime The time's structure
+ * @param startTime Time at which it started
+ * @param endTime Time at which it ended
+ */
+void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime) {
+    if(DEBUG) {
         printf("getWallClockTime\n");
         fflush(stdout);
     }
@@ -442,8 +489,13 @@ void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, 
     wallClockTime->tv_usec = microseconds % (long) 1000000;
 }
 
-void displayStats(struct timeval* wcTime, struct rusage* usage){
-    if(DEBUG){
+/**
+ * @brief Displays time stats for a given usage Struct.
+ * @param wcTime Time's Struct
+ * @param usage Usage's Struct
+ */
+void displayStats(struct timeval* wcTime, struct rusage* usage) {
+    if(DEBUG) {
         printf("displayStats\n");
         fflush(stdout);
     }
@@ -460,8 +512,13 @@ void displayStats(struct timeval* wcTime, struct rusage* usage){
     fflush(stdout);
 }
 
+/**
+ * @brief Retrieves the command's arguments.
+ * @param inputArgs The full command
+ * @return The command's arguments.
+ */
 char** getCmdArgs(char* inputArgs) {
-    if(DEBUG){
+    if(DEBUG) {
         printf("getCmdArgs, inputArgs: %s\n", inputArgs);
         fflush(stdout);
     }
@@ -475,7 +532,7 @@ char** getCmdArgs(char* inputArgs) {
     // Count elements
     strcpy(inputCopy, inputArgs);
     tmp = strtok(inputCopy, separator);
-    while(tmp != NULL){
+    while(tmp != NULL) {
         count++;
         tmp = strtok(NULL, separator);
     }
@@ -486,7 +543,7 @@ char** getCmdArgs(char* inputArgs) {
     strcpy(inputCopy, inputArgs);
     token = strtok(inputCopy, separator);
     int index = 0;
-    while(token != NULL){
+    while(token != NULL) {
         arg[index] = (char*) malloc(sizeof(token));
         strcpy(arg[index], token);
 
@@ -503,8 +560,12 @@ char** getCmdArgs(char* inputArgs) {
     return arg;
 }
 
-void *trim(char* stringToTrim) {
-    if(DEBUG){
+/**
+ * @brief Trims the string.
+ * @param stringToTrim The string to trim
+ */
+void* trim(char* stringToTrim) {
+    if(DEBUG) {
         printf("trim, stringToTrim: %s\n", stringToTrim);
         fflush(stdout);
     }
@@ -518,14 +579,15 @@ void *trim(char* stringToTrim) {
         return NULL;
 
     // Remove left whitespaces
-    while(isspace(stringToTrim[src])) src++;
+    while(isspace(stringToTrim[src]))
+		src++;
 
     if(strlen(stringToTrim) == 0)
         return stringToTrim;
 
     // Copy the rest of the string to front of string and remove the last
     if(src > 0)
-		for(dest=0; src<len; dest++, src++) {
+		for(dest=0; src < len; dest++, src++) {
 			stringToTrim[dest] = stringToTrim[src];
 			stringToTrim[src] = '\0';
 		}

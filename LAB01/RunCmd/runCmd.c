@@ -1,9 +1,8 @@
- /*H**********************************************************************
+ /***********************************************************************
 * FILENAME : runCmd.c 
 *
-* DESCRIPTION :
-*       
-*
+* DESCRIPTION :	Lab part 1
+*       		The Shell must execute a command and display time stats.
 *
 * AUTHOR :
 *       - Tony Cazorla
@@ -14,26 +13,16 @@
 * CHANGES :
 *
 * VERSION   DATE        WHO         DETAIL
-*     1.0   18/09/2017  TC & MN     Add execvp function and fork. 
-*     1.1   19/09/2017  TC & MN     Add display informations function with rusage struct. 
-*
-*H*/
+*     1.0   18/09/2017  TC & MN     Added execvp function and fork. 
+*     1.1   19/09/2017  TC & MN     Added display informations function with rusage struct. 
+* 	  1.2	12/10/2017	TC & MN		Added the DOC.
+* 									Formatted for release.
+**/
 
 #include "runCmd.h"
-#include "string.h"   // pour le type pid_t
-#include <unistd.h>		// pour fork
-#include <sys/wait.h>
-#include <stdio.h>		// pour perror, printf
-#include <stdlib.h>
-#include <errno.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 
 /**
- * @brief 
- * @param argc
- * @param argv
- * @return 
+ * @brief Main loop for the Shell execution.
  */
 int main(int argc, char **argv) 
 {
@@ -46,7 +35,7 @@ int main(int argc, char **argv)
     
 	pid_t pid;
     
-    switch(pid=fork()){
+    switch(pid=fork()) {
         case -1:
             perror("An error occured during fork()");
             fflush(stderr);
@@ -66,18 +55,19 @@ int main(int argc, char **argv)
 }
 
 /**
- * @brief 
- * @param argv
+ * @brief Executes the command as a child process.
+ * @param cmd The command to execute
  */
-void childProcessFct(char **argv) {
+void childProcessFct(char** argv) {
 	execvp(argv[1], &argv[1]);
 	printf("Erreur during execvp %s \n", strerror(errno));
 	fflush(stdout);
+	
     exit(ERROR_EXECVP);
 }
 
 /**
- * @brief 
+ * @brief Waits for the child process to be finished and displays it.
  */
 void parentProcessFct() {
     struct timeval startTime, endTime;
@@ -89,7 +79,7 @@ void parentProcessFct() {
     
     struct rusage usage;
     // Get statistics for child of the calling process 
-    if(getrusage(RUSAGE_CHILDREN, &usage) != 0){
+    if(getrusage(RUSAGE_CHILDREN, &usage) != 0) {
         perror("An error occured during getrusage()");  
         exit(ERROR_GETRUSAGE); 
     }
@@ -101,10 +91,10 @@ void parentProcessFct() {
 }
 
 /**
- * @brief 
- * @param wallClockTime
- * @param startTime
- * @param endTime
+ * @brief Sets clock time.
+ * @param wallClockTime The time's structure
+ * @param startTime Time at which it started
+ * @param endTime Time at which it ended
  */
 void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime){
     long microseconds = (endTime->tv_sec - startTime->tv_sec) * (long)1000000 + ((long)endTime->tv_usec - (long)startTime->tv_usec);
@@ -114,9 +104,9 @@ void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, 
 }
 
 /**
- * @brief 
- * @param wcTime
- * @param usage
+ * @brief Displays time stats for a given usage Struct.
+ * @param wcTime Time's Struct
+ * @param usage Usage's Struct
  */
 void displayStats(struct timeval* wcTime, struct rusage* usage){
         // Display stats of execution.

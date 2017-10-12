@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=RunCmd
 ConfigurationName      :=Debug
-WorkspacePath          :=/home/zeldorine/LOG710/LOG710/LAB01
-ProjectPath            :=/home/zeldorine/LOG710/LOG710/LAB01/RunCmd
+WorkspacePath          :=/home/waave/LOG710/LAB01
+ProjectPath            :=/home/waave/LOG710/LAB01/RunCmd
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Zeldorine
-Date                   :=04/10/17
-CodeLitePath           :=/home/zeldorine/.codelite
+User                   :=Michael Nadeau
+Date                   :=12/10/17
+CodeLitePath           :=/home/waave/.codelite
 LinkerName             :=gcc
 SharedObjectLinkerName :=gcc -shared -fPIC
 ObjectSuffix           :=.o
@@ -92,7 +92,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/runCmd.c$(ObjectSuffix): runCmd.c $(IntermediateDirectory)/runCmd.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB01/RunCmd/runCmd.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "/home/waave/LOG710/LAB01/RunCmd/runCmd.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/runCmd.c$(DependSuffix): runCmd.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/runCmd.c$(ObjectSuffix) -MF$(IntermediateDirectory)/runCmd.c$(DependSuffix) -MM runCmd.c
 
