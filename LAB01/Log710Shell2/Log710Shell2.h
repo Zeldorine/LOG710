@@ -53,7 +53,7 @@ void executeBackgroundProcess(struct BackgroundProcess* currentProcess);
  * @param cmd
  * @param runInBackground
  */
-void executeCommand(char *cmd, int runInBackground, struct BackgroundProcess* currentProcess);
+void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* currentProcess);
 
 /**
  * @brief 

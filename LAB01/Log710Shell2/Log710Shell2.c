@@ -1,4 +1,4 @@
- /*H**********************************************************************
+ /***********************************************************************
 * FILENAME : runCmd.c 
 *
 * DESCRIPTION :
@@ -25,7 +25,7 @@
 *                                       - Display background process result
 *                                       - Check background process state in background
 *
-*H*/
+*/
 
 #include "Log710Shell2.h"
 #include "string.h" 
@@ -113,9 +113,9 @@ void executShell() {
     }
 }
 
-void executeCommand(char *cmd, int runInBackground, struct BackgroundProcess* currentProcess){
+void executeCommand(char **cmd, int runInBackground, struct BackgroundProcess* currentProcess){
     if(DEBUG){
-        printf("executeCommand, arg cmd: %s, runInBackground: %d\n", cmd, runInBackground);
+        printf("executeCommand, arg cmd: %s, runInBackground: %d\n", cmd[0], runInBackground);
         fflush(stdout);
     }
     
@@ -146,6 +146,23 @@ void executeCommand(char *cmd, int runInBackground, struct BackgroundProcess* cu
             break;
     }
 }
+
+
+/**
+ * @brief 
+ * @param cmd
+ */
+void childProcessFct(char **cmd) {  
+    if(DEBUG){
+        printf("childProcessFct, cmd: %s\n", cmd[0]);
+        fflush(stdout);
+    }
+     
+    execvp(cmd[0], &cmd[0]);
+	printf("Erreur - execvp: %s \n",strerror(errno));
+	fflush(stdout);
+}
+
 
 /**
  * @brief 
@@ -296,21 +313,6 @@ void removeProcess(struct BackgroundProcess* process){
     free(process);
 }
 
-/**
- * @brief 
- * @param cmd
- */
-void childProcessFct(char **cmd) {  
-    if(DEBUG){
-        printf("childProcessFct, cmd: %s\n", cmd[0]);
-        fflush(stdout);
-    }
-     
-    execvp(cmd[0], &cmd[0]);
-	printf("Erreur - execvp: %s \n",strerror(errno));
-	fflush(stdout);
-}
-
 void executeBackgroundProcess(struct BackgroundProcess* currentProcess) {
     if(DEBUG){
         printf("executeBackgroundProcess\n");
@@ -326,7 +328,9 @@ void executeBackgroundProcess(struct BackgroundProcess* currentProcess) {
             backgroundProcessList[backgroundProcessListCounter] = currentProcess;
             backgroundProcessListCounter++;
 
-            executeCommand(currentProcess->cmd, TRUE, currentProcess);
+            // Create command
+            char** cmd = getCmdArgs(currentProcess->cmd);
+            executeCommand(cmd, TRUE, currentProcess);
 
             printf("Process %d added with cmd %s\n", currentProcess->pid, currentProcess->cmd);
             printf("[%d] %d\n", currentProcess->id, currentProcess->pid);
