@@ -22,7 +22,7 @@ if [[ -d ${varRunCmdFolder} ]]; then
 	gcc -o6 runCmd.c -o RunCmd
 	chmod 777 RunCmd
 	echo "BUILD SUCCESS"
-	echo "To run this project execute this command : ./RunCmd/RunCmd.o"
+	echo "To run this project execute this command : ./RunCmd/RunCmd"
 else
 	echo "BUILD ERROR, cannot compile RunCmd, project doesn't exist"
 fi
