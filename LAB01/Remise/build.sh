@@ -19,7 +19,7 @@ echo "Building RunCmd project..."
 
 if [[ -d ${varRunCmdFolder} ]]; then
 	cd ${varRunCmdFolder}
-	gcc -o6 runCmd.c -o RunCmd
+	gcc -std=gnu99 runCmd.c -o RunCmd
 	chmod 777 RunCmd
 	echo "BUILD SUCCESS"
 	echo "To run this project execute this command : ./RunCmd/RunCmd"
@@ -35,7 +35,7 @@ echo "Building Log710Shell project..."
 
 if [[ -d ${varLog710ShellFolder} ]]; then
 	cd ${varLog710ShellFolder}
-	gcc -O6 Log710Shell.c -o Log710Shell
+	gcc -std=gnu99 Log710Shell.c -o Log710Shell
 	chmod 777 Log710Shell
 	echo "BUILD SUCCESS"
 	echo "To run this project execute this command : ./Log710Shell/Log710Shell"
@@ -52,7 +52,7 @@ echo "Building Log710Shell2 project..."
 
 if [[ -d ${varLog710Shell2Folder} ]]; then
 	cd ${varLog710Shell2Folder}
-	gcc Log710Shell2.c -o Log710Shell2
+	gcc -std=gnu99 Log710Shell2.c -o Log710Shell2
 	chmod 777 Log710Shell2
 	echo "BUILD SUCCESS"
 	echo "To run this project execute this command : ./Log710Shell2/Log710Shell2"
