@@ -1,33 +1,33 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <errno.h>
-
-#include "string.h" 
+#include <string.h>
+#include <ctype.h> 
 
 // DEFINE PART
-#define SUCCESS 0
-#define ERROR_FORK 1
-#define ERROR_EXECVP 2
-#define ERROR_ARGS 3
-#define ERROR_GETRUSAGE 4
-
 #define TRUE 1
 #define FALSE 0
 #define BUFFER_SIZE  2048
 #define MAX_BACKGROUNG_PROCESS 128
 #define DEBUG 0
 
+// RETURN CODE 
+#define SUCCESS 0
+#define ERROR_FORK 1
+#define ERROR_EXECVP 2
+#define ERROR_ARGS 3
+#define ERROR_GETRUSAGE 4
+
 // COMMAND TO MANAGE
 const char EXIT_COMMAND[5] = "exit";
 const char CD_COMMAND[3] = "cd";
 const char APTACHES_COMMAND[9] = "aptaches";
-const char PROMPT[15] = "\nLog710A2017%>";
+
+const char PROMPT[16] = "\nLog710A2017%%>";
 
 // STRUCTURE PART
 struct BackgroundProcess {
@@ -113,7 +113,7 @@ void reorgBackgroundProcessList(int index);
 void removeProcess(struct BackgroundProcess* process);
 
 /**
- * @brief Execute the command as a background task.
+ * @brief Register and Execute the command as a background task.
  * @param currentProcess The process to execute
  */
 void executeBackgroundProcess(struct BackgroundProcess* currentProcess);
@@ -131,7 +131,7 @@ void parentProcessFct(pid_t pid);
 void displayCommandResult(struct timeval startTime);
  
 /**
- * @brief Sets clock time.
+ * @brief Gets the wallclock time.
  * @param wallClockTime The time's structure
  * @param startTime Time at which it started
  * @param endTime Time at which it ended
@@ -139,7 +139,7 @@ void displayCommandResult(struct timeval startTime);
 void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime);
 
 /**
- * @brief Displays time stats for a given usage Struct.
+ * @brief Displays stats about execution process for a given usage Struct.
  * @param wcTime Time's Struct
  * @param usage Usage's Struct
  */
@@ -157,18 +157,3 @@ char** getCmdArgs(char* argv);
  * @param stringToTrim The string to trim
  */
 void* trim(char* stringToTrim);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=Log710Shell
 ConfigurationName      :=Debug
-WorkspacePath          :=/home/waave/LOG710/LAB01
-ProjectPath            :=/home/waave/LOG710/LAB01/Log710Shell
+WorkspacePath          :=/home/zeldorine/LOG710/LOG710/LAB01
+ProjectPath            :=/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Michael Nadeau
+User                   :=Zeldorine
 Date                   :=12/10/17
-CodeLitePath           :=/home/waave/.codelite
+CodeLitePath           :=/home/zeldorine/.codelite
 LinkerName             :=gcc
 SharedObjectLinkerName :=gcc -shared -fPIC
 ObjectSuffix           :=.o
@@ -92,7 +92,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix): Log710Shell.c $(IntermediateDirectory)/Log710Shell.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/waave/LOG710/LAB01/Log710Shell/Log710Shell.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB01/Log710Shell/Log710Shell.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Log710Shell.c$(DependSuffix): Log710Shell.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Log710Shell.c$(ObjectSuffix) -MF$(IntermediateDirectory)/Log710Shell.c$(DependSuffix) -MM Log710Shell.c
 

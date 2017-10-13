@@ -398,7 +398,7 @@ void removeProcess(struct BackgroundProcess* process) {
 }
 
 /**
- * @brief Execute the command as a background task.
+ * @brief Register and Execute the command as a background task.
  * @param currentProcess The process to execute
  */
 void executeBackgroundProcess(struct BackgroundProcess* currentProcess) {
@@ -440,7 +440,7 @@ void parentProcessFct(pid_t pid) {
     gettimeofday(&startTime, NULL);
         
     int status;
-    waitpid(pid, &status, NULL);
+    waitpid(pid, &status, 0);
     
     displayCommandResult(startTime);
 }
@@ -472,7 +472,7 @@ void displayCommandResult(struct timeval startTime) {
 }
 
 /**
- * @brief Sets clock time.
+ * @brief Gets the wallclock time.
  * @param wallClockTime The time's structure
  * @param startTime Time at which it started
  * @param endTime Time at which it ended
@@ -490,7 +490,7 @@ void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, 
 }
 
 /**
- * @brief Displays time stats for a given usage Struct.
+ * @brief Displays stats about execution process for a given usage Struct.
  * @param wcTime Time's Struct
  * @param usage Usage's Struct
  */
@@ -595,4 +595,6 @@ void* trim(char* stringToTrim) {
     // Remove right whitespaces
     for(dest = len-  1; isspace(stringToTrim[dest]); --dest)
         stringToTrim[dest] = '\0';
+        
+    return stringToTrim;
 }

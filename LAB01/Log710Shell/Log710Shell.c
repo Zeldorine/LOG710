@@ -20,7 +20,8 @@
 *     1.0   25/09/2017  TC & MN     Added main loop, input command, cd and exit commands. 
 *     1.1   03/10/2017  TC & MN     Added trim method.
 * 	  1.2	12/10/2017	TC & MN		Added the DOC.
-* 									Formatted for release.
+*									Formatted for release.
+* 	  1.3	12/10/2017	TC & MN		Added exit when the command executed by the child fail.
 **/
 
 #include "Log710Shell.h"
@@ -37,7 +38,7 @@ int main(int argc, char** argv)
 void executShell() {
     while(TRUE) {
         // Display prompt
-        printf("Log710A2017%>");
+        printf(PROMPT);
         fflush(stdout);
         
         // Get command
@@ -79,9 +80,11 @@ void executShell() {
                 break;
                 
             default:
-                parentProcessFct();
+                parentProcessFct(pid);
                 break;
         }
+        
+        free(cmd);
     }
 }
 
@@ -116,18 +119,31 @@ int handleCommand(char** cmd) {
  */
 void childProcessFct(char** cmd) {
     execvp(cmd[0], &cmd[0]);
-	printf("Erreur %s \n",strerror(errno));
-	fflush(stdout);
+    
+    // Display the wrong command
+	printf("\nAn error occured while executing execvp, the command ");
+
+    for(int i = 0; cmd[i] != '\0'; i++)
+        printf("%s ", cmd[i]);
+
+    printf("doesn't exist\n");
+    fflush(stdout);
+	
+    free(cmd);
+    
+    exit(-1);
 }
 
 /**
  * @brief Waits for the child process to be finished and displays it.
+ * @param pid Child's process ID
  */
-void parentProcessFct() {
+void parentProcessFct(pid_t pid) {
     struct timeval startTime, endTime;
     gettimeofday(&startTime, NULL);
         
-	wait(NULL);
+	int status;
+    waitpid(pid, &status, 0);
     
     gettimeofday(&endTime, NULL);
     
@@ -145,7 +161,7 @@ void parentProcessFct() {
 }
 
 /**
- * @brief Sets clock time.
+ * @brief Gets the wallclock time.
  * @param wallClockTime The time's structure
  * @param startTime Time at which it started
  * @param endTime Time at which it ended
@@ -158,7 +174,7 @@ void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, 
 }
 
 /**
- * @brief Displays time stats for a given usage Struct.
+ * @brief Displays stats about execution process for a given usage Struct.
  * @param wcTime Time's Struct
  * @param usage Usage's Struct
  */
@@ -220,7 +236,7 @@ char** getCmdArgs(char* inputArgs) {
  * @brief Trims the string.
  * @param stringToTrim The string to trim
  */
-void* trim(char* stringToTrim) {
+char* trim(char* stringToTrim) {
     int dest;
     int src = 0;
     int len = strlen(stringToTrim);
@@ -247,4 +263,6 @@ void* trim(char* stringToTrim) {
     // Remove right whitespaces
     for(dest=len-1; isspace(stringToTrim[dest]); --dest)
         stringToTrim[dest] = '\0';
+        
+    return stringToTrim;
 }

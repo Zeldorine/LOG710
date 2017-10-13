@@ -1,24 +1,20 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <errno.h>
-
 #include "string.h"
 
-// Return code part
+// DEFINE PART - RETURN CODE
+#define SUCCESS 0
+#define ERROR_FORK 1
+#define ERROR_EXECVP 2
+#define ERROR_ARGS 3
+#define ERROR_GETRUSAGE 4
 
-int SUCCESS = 0;
-int ERROR_FORK = 1;
-int ERROR_EXECVP = 2;
-int ERROR_ARGS = 3;
-int ERROR_GETRUSAGE = 4;
-
-// Function part
+// FUNCTION PART
 
 /**
  * @brief Executes the command as a child process.
@@ -28,11 +24,12 @@ void childProcessFct(char** argv);
 
 /**
  * @brief Waits for the child process to be finished and displays it.
+ * @param pid Child's process ID
  */
-void parentProcessFct();
+void parentProcessFct(pid_t pid);
 
 /**
- * @brief Sets clock time.
+ * @brief Gets the wallclock time.
  * @param wallClockTime The time's structure
  * @param startTime Time at which it started
  * @param endTime Time at which it ended
@@ -40,7 +37,7 @@ void parentProcessFct();
 void getWallClockTime(struct timeval* wallClockTime, struct timeval* startTime, struct timeval* endTime);
 
 /**
- * @brief Displays time stats for a given usage Struct.
+ * @brief Displays stats about execution process for a given usage Struct.
  * @param wcTime Time's Struct
  * @param usage Usage's Struct
  */

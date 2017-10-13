@@ -17,6 +17,7 @@
 *     1.1   19/09/2017  TC & MN     Added display informations function with rusage struct. 
 * 	  1.2	12/10/2017	TC & MN		Added the DOC.
 * 									Formatted for release.
+* 	  1.3	12/10/2017	TC & MN		Added exit when the command executed by the child fail.
 **/
 
 #include "runCmd.h"
@@ -28,7 +29,8 @@ int main(int argc, char **argv)
 {
     // Checks args before to process to make sure a command is provided by the user
 	if (argc < 2) {
-		printf("Error, a command must be specify in argument\n");
+		printf("Error, a command must be specify in argument.\n");
+        printf("For instance: ./RunCmd ls -l.\n");
 		fflush(stdout);
         exit(ERROR_ARGS);
 	}
@@ -47,7 +49,7 @@ int main(int argc, char **argv)
             break;
             
         default:
-            parentProcessFct();
+            parentProcessFct(pid);
             break;
     }
     
@@ -60,20 +62,29 @@ int main(int argc, char **argv)
  */
 void childProcessFct(char** argv) {
 	execvp(argv[1], &argv[1]);
-	printf("Erreur during execvp %s \n", strerror(errno));
-	fflush(stdout);
-	
+    
+    // Display the wrong command  
+	printf("\nAn error occured while executing execvp, the command ");
+
+    for(int i = 1; argv[i] != '\0'; i++)
+        printf("%s ", argv[i]);
+
+    printf("doesn't exist\n");
+    fflush(stdout);
+    
     exit(ERROR_EXECVP);
 }
 
 /**
  * @brief Waits for the child process to be finished and displays it.
+ * @param pid Child's process ID
  */
-void parentProcessFct() {
+void parentProcessFct(pid_t pid) {
     struct timeval startTime, endTime;
     gettimeofday(&startTime, NULL);
         
-	wait(NULL);
+	int status;
+    waitpid(pid, &status, 0);
     
     gettimeofday(&endTime, NULL);
     
