@@ -112,6 +112,13 @@ void executShell() {
 			
             continue;
         }
+
+        // Create command
+        char** cmd = getCmdArgs(inputArg);
+
+        // Check if command has to be handled
+        if (handleCommand(cmd) == TRUE)
+            continue;
 		
         // Check if task to be executed in background
         if (runInBackground) {
@@ -124,13 +131,6 @@ void executShell() {
 			
             continue;
         }
-  
-        // Create command
-        char** cmd = getCmdArgs(inputArg);
-
-        // Check if command has to be handled
-        if (handleCommand(cmd) == TRUE)
-            continue;
     
         executeCommand(cmd, runInBackground, NULL);
     }
