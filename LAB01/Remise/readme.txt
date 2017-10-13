@@ -30,7 +30,7 @@ en arriere-plan.
 ----------------------
      PRE-REQUIS
 ----------------------
-le compilateur gcc est requis et doit donc etre installe sur le poste avant l'execution du script 
+Le compilateur gcc est requis et doit donc etre installe sur le poste avant l'execution du script 
 de compilation.
 
 ----------------------
