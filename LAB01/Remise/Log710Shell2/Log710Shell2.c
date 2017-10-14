@@ -37,6 +37,7 @@
 
 struct BackgroundProcess* backgroundProcessList[MAX_BACKGROUNG_PROCESS];
 int backgroundProcessListCounter = 0;
+int totalProcessExec = 0;
 
 /**
  * @brief Overrides the default behavior of SIGCHLD.
@@ -124,7 +125,7 @@ void executShell() {
         if (runInBackground) {
             struct BackgroundProcess* currentProcess = malloc(sizeof(struct BackgroundProcess));
             currentProcess->cmd = malloc(strlen(inputArg) * sizeof(char*));
-            currentProcess->id = backgroundProcessListCounter+1;
+            currentProcess->id = ++totalProcessExec;
 			
             strcpy(currentProcess->cmd, inputArg);
             executeBackgroundProcess(currentProcess);
@@ -237,7 +238,6 @@ int handleCommand(char** cmd) {
                 printf("Current working diretory: %s\n", cwd);
             }
             
-            printf("Current working diretory: %s\n", cwd);
             fflush(stdout);
         }
         
