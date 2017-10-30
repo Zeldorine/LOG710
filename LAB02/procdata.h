@@ -1,6 +1,5 @@
 #include <linux/types.h>
 #include <unistd.h>
-//#include "linux/pid.h"
 
 struct procdata {
 	long state;		// Etat du processus
