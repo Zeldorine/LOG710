@@ -60,7 +60,7 @@ AS       := as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IntermediateDirectory)/logger.c$(ObjectSuffix) $(IntermediateDirectory)/linkedList.c$(ObjectSuffix) $(IntermediateDirectory)/firstFit.c$(ObjectSuffix) $(IntermediateDirectory)/bestFit.c$(ObjectSuffix) $(IntermediateDirectory)/worstFit.c$(ObjectSuffix) $(IntermediateDirectory)/allocationStrategyFactory.c$(ObjectSuffix) $(IntermediateDirectory)/nextFit.c$(ObjectSuffix) $(IntermediateDirectory)/linkedListTest.c$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.c$(ObjectSuffix) $(IntermediateDirectory)/logger.c$(ObjectSuffix) $(IntermediateDirectory)/linkedList.c$(ObjectSuffix) $(IntermediateDirectory)/allocationStrategy.c$(ObjectSuffix) $(IntermediateDirectory)/linkedListTest.c$(ObjectSuffix) 
 
 
 
@@ -115,45 +115,13 @@ $(IntermediateDirectory)/linkedList.c$(DependSuffix): linkedList.c
 $(IntermediateDirectory)/linkedList.c$(PreprocessSuffix): linkedList.c
 	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/linkedList.c$(PreprocessSuffix) linkedList.c
 
-$(IntermediateDirectory)/firstFit.c$(ObjectSuffix): firstFit.c $(IntermediateDirectory)/firstFit.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/firstFit.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/firstFit.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/firstFit.c$(DependSuffix): firstFit.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/firstFit.c$(ObjectSuffix) -MF$(IntermediateDirectory)/firstFit.c$(DependSuffix) -MM firstFit.c
+$(IntermediateDirectory)/allocationStrategy.c$(ObjectSuffix): allocationStrategy.c $(IntermediateDirectory)/allocationStrategy.c$(DependSuffix)
+	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/allocationStrategy.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/allocationStrategy.c$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/allocationStrategy.c$(DependSuffix): allocationStrategy.c
+	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/allocationStrategy.c$(ObjectSuffix) -MF$(IntermediateDirectory)/allocationStrategy.c$(DependSuffix) -MM allocationStrategy.c
 
-$(IntermediateDirectory)/firstFit.c$(PreprocessSuffix): firstFit.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/firstFit.c$(PreprocessSuffix) firstFit.c
-
-$(IntermediateDirectory)/bestFit.c$(ObjectSuffix): bestFit.c $(IntermediateDirectory)/bestFit.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/bestFit.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/bestFit.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/bestFit.c$(DependSuffix): bestFit.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/bestFit.c$(ObjectSuffix) -MF$(IntermediateDirectory)/bestFit.c$(DependSuffix) -MM bestFit.c
-
-$(IntermediateDirectory)/bestFit.c$(PreprocessSuffix): bestFit.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/bestFit.c$(PreprocessSuffix) bestFit.c
-
-$(IntermediateDirectory)/worstFit.c$(ObjectSuffix): worstFit.c $(IntermediateDirectory)/worstFit.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/worstFit.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/worstFit.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/worstFit.c$(DependSuffix): worstFit.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/worstFit.c$(ObjectSuffix) -MF$(IntermediateDirectory)/worstFit.c$(DependSuffix) -MM worstFit.c
-
-$(IntermediateDirectory)/worstFit.c$(PreprocessSuffix): worstFit.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/worstFit.c$(PreprocessSuffix) worstFit.c
-
-$(IntermediateDirectory)/allocationStrategyFactory.c$(ObjectSuffix): allocationStrategyFactory.c $(IntermediateDirectory)/allocationStrategyFactory.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/allocationStrategyFactory.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/allocationStrategyFactory.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/allocationStrategyFactory.c$(DependSuffix): allocationStrategyFactory.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/allocationStrategyFactory.c$(ObjectSuffix) -MF$(IntermediateDirectory)/allocationStrategyFactory.c$(DependSuffix) -MM allocationStrategyFactory.c
-
-$(IntermediateDirectory)/allocationStrategyFactory.c$(PreprocessSuffix): allocationStrategyFactory.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/allocationStrategyFactory.c$(PreprocessSuffix) allocationStrategyFactory.c
-
-$(IntermediateDirectory)/nextFit.c$(ObjectSuffix): nextFit.c $(IntermediateDirectory)/nextFit.c$(DependSuffix)
-	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/nextFit.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/nextFit.c$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/nextFit.c$(DependSuffix): nextFit.c
-	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/nextFit.c$(ObjectSuffix) -MF$(IntermediateDirectory)/nextFit.c$(DependSuffix) -MM nextFit.c
-
-$(IntermediateDirectory)/nextFit.c$(PreprocessSuffix): nextFit.c
-	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/nextFit.c$(PreprocessSuffix) nextFit.c
+$(IntermediateDirectory)/allocationStrategy.c$(PreprocessSuffix): allocationStrategy.c
+	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/allocationStrategy.c$(PreprocessSuffix) allocationStrategy.c
 
 $(IntermediateDirectory)/linkedListTest.c$(ObjectSuffix): linkedListTest.c $(IntermediateDirectory)/linkedListTest.c$(DependSuffix)
 	$(CC) $(SourceSwitch) "/home/zeldorine/LOG710/LOG710/LAB03/MemoryManager/linkedListTest.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/linkedListTest.c$(ObjectSuffix) $(IncludePath)

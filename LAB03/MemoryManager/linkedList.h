@@ -68,6 +68,8 @@ int removeElementAt(struct linkedList_type* list, int index);
 
 struct node* get(struct linkedList_type* list, int index);
 
+void displayNode(struct linkedList_type* list, int index);
+
 int isEmpty(struct linkedList_type* list);
 
 int isFull(struct linkedList_type* list);

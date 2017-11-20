@@ -26,7 +26,8 @@
 #include "logger.h"
 #include "linkedList.h"
 
-int main(int argc, char **argv)
+
+int main()
 {
 	initLogger();
     
@@ -34,7 +35,9 @@ int main(int argc, char **argv)
     
     struct linkedList_type* linkedList = linkedListCreator(&linkedList);
     
-
+    if(linkedList == NULL){
+        log(ERROR, "main", "main is null \n", __LINE__);
+    }
     
     closeLogger();
    

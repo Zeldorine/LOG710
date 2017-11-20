@@ -26,6 +26,8 @@
 #include "logger.h"
 #include "linkedList.h"
 
+void printElement(struct linkedList_type* list);
+
 int linkedListTest()
 {
 	initLogger();
@@ -69,44 +71,31 @@ int linkedListTest()
     printf("\n");
     fflush(stdout);
     
-    displayNode(get(linkedList, -1), -1);
-    displayNode(get(linkedList, 0), 0);
-    displayNode(get(linkedList, 1), 1);
-    displayNode(get(linkedList, 2), 2);
-    displayNode(get(linkedList, 3), 3);
-    displayNode(get(linkedList, 4), 4);
-    displayNode(get(linkedList, 5), 5);
-    displayNode(get(linkedList, 6), 6);
+    displayNode(linkedList, -1);
+    displayNode(linkedList, 0);
+    displayNode(linkedList, 1);
+    displayNode(linkedList, 2);
+    displayNode(linkedList, 3);
+    displayNode(linkedList, 4);
+    displayNode(linkedList, 5);
+    displayNode(linkedList, 6);
     
     removeElementAt(linkedList, 4);
-    displayNode(get(linkedList, 3), 3);
-    displayNode(get(linkedList, 4), 4);
-    displayNode(get(linkedList, 5), 5);
-    displayNode(get(linkedList, 6), 6);
+    displayNode(linkedList, 3);
+    displayNode(linkedList, 4);
+    displayNode(linkedList, 5);
+    displayNode(linkedList, 6);
     
     printf("\n");
     fflush(stdout);
     
-    displayNode(get(linkedList, 0), 0);
+    displayNode(linkedList, 0);
     removeElementAt(linkedList, 0);
-    displayNode(get(linkedList, 0), 0);
+    displayNode(linkedList, 0);
     
     closeLogger();
    
 	return 0;
-}
-
-void displayNode(struct node* nodeToDisplay, int index){
-    char debugMsg[64];
-    if(nodeToDisplay == NULL){
-        sprintf(debugMsg, "Element at index %d is null", index);
-        log(INFO, "main.c", debugMsg, __LINE__);
-        return;
-    }
-    
-    int* value = (int *) nodeToDisplay->element;
-    sprintf(debugMsg, "Element at index %d is %d", index, *value);
-    log(INFO, "main.c", debugMsg, __LINE__);
 }
 
 void printElement(struct linkedList_type* list){

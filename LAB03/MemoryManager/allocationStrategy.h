@@ -22,41 +22,70 @@
 *
 */
 
+// DEFINE PART
+#define MAX_MEMORY_SIZE  2048
+#define DEBUG 0
+
+// RETURN CODE 
+#define SUCCESS 0
+#define ERROR_MEMORY_ALLOCATION 1
+
 // ENUM
+typedef enum BLOC_TYPE BLOC_TYPE;
 enum BLOC_TYPE {
     HOLE,
-    PROCESS;
-}
+    PROCESS
+};
+
+typedef enum ALLOCATION_STRATEGY ALLOCATION_STRATEGY;
+enum ALLOCATION_STRATEGY {
+    FIRST_FIT,
+    BEST_FIT,
+    WORST_FIT,
+    NEXT_FIT
+};
 
 // STRUCTURE PART
 struct memoryBloc {
     unsigned long blocAddress;
-    enum BLOC_TYPE blocType = HOLE;
+    BLOC_TYPE blocType;
     int start;
     int length;
-}
+};
 
 /**
  * @brief 
  */
 void initmem();
 
-void alloumem();
+struct memoryBloc* alloumem();
 
-void liberemem();
+void liberemem(struct memoryBloc* blocToFree);
 
-void nbloclibres();
+int nbloclibres();
 
-void nblocalloues;
+int nblocalloues();
 
-void memlibre();
+int memlibre();
 
-void mem_pgrand_libre();
+int mem_pgrand_libre();
 
-void mem_small_free();
+int mem_small_free(int maxBlocSize);
 
-void mem_est_alloue();
+void mem_est_alloue(int pByte);
 
 void affiche_etat_memoire();
 
 void affiche_parametres_memoire();
+
+void setAllocationStrategy(ALLOCATION_STRATEGY strategy);
+
+// All allocations strategies
+
+struct memoryBloc* allocationStrategyFirstFit();
+
+struct memoryBloc* allocationStrategyWorstFit();
+
+struct memoryBloc* allocationStrategyBestFit();
+
+struct memoryBloc* allocationStrategyNextFit();

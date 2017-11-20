@@ -98,16 +98,11 @@
     <File Name="logger.h"/>
     <File Name="linkedList.c"/>
     <File Name="linkedList.h"/>
-    <File Name="firstFit.c"/>
-    <File Name="bestFit.c"/>
-    <File Name="worstFit.c"/>
     <File Name="allocationStrategy.h"/>
-    <File Name="allocationStrategyFactory.c"/>
-    <File Name="allocationStrategyFactory.h"/>
-    <File Name="nextFit.c"/>
     <File Name="common.h"/>
     <VirtualDirectory Name="Test">
       <File Name="linkedListTest.c"/>
     </VirtualDirectory>
+    <File Name="allocationStrategy.c"/>
   </VirtualDirectory>
 </CodeLite_Project>
