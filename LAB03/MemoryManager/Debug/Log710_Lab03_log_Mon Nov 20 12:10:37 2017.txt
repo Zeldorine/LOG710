@@ -1,0 +1,13 @@
+[INFO]Mon Nov 20 12:10:37 2017	main - 33	LOG710 - LAB03 - MEMORY MANAGER 
+
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c  - 48	Enter - create a new list with capacity : 128
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c - 58	Exit - create a new list with capacity : 128
+[INFO]Mon Nov 20 12:10:37 2017	main.c - 107	List is empty
+[ERROR]Mon Nov 20 12:10:37 2017	linkedList.c - 163	List is empty, cannot remove an element
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c - 87	Add an element at index : 0. List capacity = 128 and list size = 0
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c - 94	Add element to the head of the list
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c - 151	Element added at index : 0. List capacity = 128 and list size = 1
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c - 87	Add an element at index : 1. List capacity = 128 and list size = 1
+[INFO]Mon Nov 20 12:10:37 2017	linkedList.c - 128	Add element at the index of the list
+[ERROR]Mon Nov 20 12:10:37 2017	linkedList.c - 238	Cannot get element at index 1, the size is 1
+[ERROR]Mon Nov 20 12:10:37 2017	linkedList.c - 134	Cannot add element at index 1, cannot find element to replace, it is null

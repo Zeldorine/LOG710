@@ -1,0 +1,1 @@
+./Debug/main.c.o ./Debug/logger.c.o ./Debug/linkedList.c.o ./Debug/firstFit.c.o ./Debug/bestFit.c.o ./Debug/worstFit.c.o ./Debug/allocationStrategyFactory.c.o ./Debug/nextFit.c.o ./Debug/linkedListTest.c.o
