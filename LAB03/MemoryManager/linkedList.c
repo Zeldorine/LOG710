@@ -18,7 +18,6 @@
 * VERSION   DATE        WHO         DETAIL
 *     1.0   13/11/2017  TC & MN     Create list and first implementation of these methods :
 *                                       - struct linkedList linkedList();
-*                                       - struct linkedList linkedList(int capacity);
 *                                       - int addElement(struct linkedList* list, void* element);
 *                                       - int addElementAt(struct linkedList* list, void* element, int index);
 *                                       - int removeElementAt(struct linkedList* list, int index);
@@ -29,6 +28,8 @@
 *                                       - int size(struct linkedList* list);
 *                                       - void printElement(struct linkedList* list);
 * 
+*     1.1   20/11/2017  TC & MN     Add an attribut to keep the last node added
+* 
 * 
 *
 */
@@ -38,24 +39,18 @@
 #include "common.h"
 #include "linkedList.h"
 
-struct linkedList_type* linkedListCreator(){
-    return linkedListCreatorWithCapacity(NB_BLOC_SIZE);
-}
+int lastAddedNodeIndex;
 
-struct linkedList_type* linkedListCreatorWithCapacity( int capacity){    
-    char debugMsg[64];
-    sprintf(debugMsg, "Enter - create a new list with capacity : %d", capacity);
-    log(INFO, "linkedList.c ", debugMsg, __LINE__);
+struct linkedList_type* linkedListCreator(){    
+    log(INFO, "linkedList.c ", "Enter - create a new list", __LINE__);
     
     struct linkedList_type* list = malloc(sizeof(struct linkedList_type));
     
-    list->capacity = NB_BLOC_SIZE;
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
 
-    sprintf(debugMsg, "Exit - create a new list with capacity : %d", capacity);
-    log(INFO, "linkedList.c", debugMsg, __LINE__);
+    log(INFO, "linkedList.c", "Exit - create a new list", __LINE__);
 
     return list;
 }
@@ -70,20 +65,15 @@ int addElementAt(struct linkedList_type* list, void* element, int index){
         return ERR_ADD_NODE;
     }
     
-    if(isFull(list)){
-        log(ERROR, "linkedList.c", "List is full, cannot add an element", __LINE__);
-        return ERR_ADD_NODE;
-    }
-    
     char debugMsg[64];
     
-    if(index > list->capacity || index < 0){
-        sprintf(debugMsg, "Cannot add an element at index : %d. List capacity = %d and list size = %d", index, list->capacity, list->size);
+    if(index > list->size || index < 0){
+        sprintf(debugMsg, "Cannot add an element at index : %d. List size = %d", index, list->size);
         log(INFO, "linkedList.c", debugMsg, __LINE__);
         return ERR_ADD_NODE;
     }
     
-    sprintf(debugMsg, "Add an element at index : %d. List capacity = %d and list size = %d", index, list->capacity, list->size);
+    sprintf(debugMsg, "Add an element at index : %d. List size = %d", index, list->size);
     log(INFO, "linkedList.c", debugMsg, __LINE__);
     
     struct node* newNode = malloc(sizeof(struct node));
@@ -107,6 +97,8 @@ int addElementAt(struct linkedList_type* list, void* element, int index){
         
         if(isEmpty(list)){
             list->tail = newNode;
+            newNode->next = list->head;
+            newNode->previous = list->tail; 
         }
     } else if(index == list->size) {
         // Add element to the tail 
@@ -146,9 +138,10 @@ int addElementAt(struct linkedList_type* list, void* element, int index){
         nodeToReplace->previous = newNode;
     }
     
+    lastAddedNodeIndex = index;
     list->size++;
     
-    sprintf(debugMsg, "Element added at index : %d. List capacity = %d and list size = %d", index, list->capacity, list->size);
+    sprintf(debugMsg, "Element added at index : %d. List size = %d", index, list->size);
     log(INFO, "linkedList.c", debugMsg, __LINE__);
     
     return SUCCESS;
@@ -168,12 +161,12 @@ int removeElementAt(struct linkedList_type* list, int index){
     char debugMsg[64];
     
     if(index > list->size || index < 0){
-        sprintf(debugMsg, "Cannot remove an element at index : %d. List capacity = %d and list size = %d", index, list->capacity, list->size);
+        sprintf(debugMsg, "Cannot remove an element at index : %d. List size = %d", index, list->size);
         log(INFO, "linkedList.c", debugMsg, __LINE__);
         return ERR_REMOVE_NODE;
     }
     
-    sprintf(debugMsg, "Remove an element at index : %d. List capacity = %d and list size = %d", index, list->capacity, list->size);
+    sprintf(debugMsg, "Remove an element at index : %d. List size = %d", index, list->size);
     log(INFO, "linkedList.c", debugMsg, __LINE__);
     
     // Remove element to the head 
@@ -221,7 +214,7 @@ int removeElementAt(struct linkedList_type* list, int index){
     }
     
     list->size--;
-    sprintf(debugMsg, "Element removed at index : %d. List capacity = %d and list size = %d", index, list->capacity, list->size);
+    sprintf(debugMsg, "Element removed at index : %d. List size = %d", index,list->size);
     log(INFO, "linkedList.c", debugMsg, __LINE__);
     
     return SUCCESS;
@@ -300,10 +293,6 @@ void displayNode(struct linkedList_type* list, int index){
 
 int isEmpty(struct linkedList_type* list){
     return list->size == 0;
-}
-
-int isFull(struct linkedList_type* list){
-    return list->size == list->capacity;
 }
 
 int size(struct linkedList_type* list){

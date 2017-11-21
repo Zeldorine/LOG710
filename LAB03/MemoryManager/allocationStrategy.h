@@ -29,6 +29,7 @@
 // RETURN CODE 
 #define SUCCESS 0
 #define ERROR_MEMORY_ALLOCATION 1
+#define ERROR_MEMORY_OVERFLOW 2
 
 // ENUM
 typedef enum BLOC_TYPE BLOC_TYPE;
@@ -47,7 +48,7 @@ enum ALLOCATION_STRATEGY {
 
 // STRUCTURE PART
 struct memoryBloc {
-    unsigned long blocAddress;
+    void* blocAddress;
     BLOC_TYPE blocType;
     int start;
     int length;
@@ -58,9 +59,11 @@ struct memoryBloc {
  */
 void initmem();
 
-struct memoryBloc* alloumem();
+struct memoryBloc* alloumem(int size);
 
 void liberemem(struct memoryBloc* blocToFree);
+
+void mergeBloc(int previousBlocIndex, int nextBlocIndex);
 
 int nbloclibres();
 
@@ -72,20 +75,22 @@ int mem_pgrand_libre();
 
 int mem_small_free(int maxBlocSize);
 
-void mem_est_alloue(int pByte);
+int mem_est_alloue(int pByte);
 
 void affiche_etat_memoire();
 
 void affiche_parametres_memoire();
 
+char* getBlocTypeName(BLOC_TYPE type);
+
 void setAllocationStrategy(ALLOCATION_STRATEGY strategy);
 
 // All allocations strategies
+struct memoryBloc* allocationStrategyFirstFit(int size);
 
-struct memoryBloc* allocationStrategyFirstFit();
+struct memoryBloc* allocationStrategyWorstFit(int size);
 
-struct memoryBloc* allocationStrategyWorstFit();
+struct memoryBloc* allocationStrategyBestFit(int size);
 
-struct memoryBloc* allocationStrategyBestFit();
+struct memoryBloc* allocationStrategyNextFit(int size);
 
-struct memoryBloc* allocationStrategyNextFit();

@@ -41,7 +41,6 @@
 #define ERR_REMOVE_NODE 2
 #define ERR_ADD_NODE 3
 #define ERR_GET_NODE 3
-#define NB_BLOC_SIZE 128
 
 struct node {
     void* element;
@@ -50,15 +49,12 @@ struct node {
 };
 
 struct linkedList_type{
-    int capacity;
     int size;
     struct node* head;
     struct node* tail;
 };
 
 struct linkedList_type* linkedListCreator();
-
-struct linkedList_type* linkedListCreatorWithCapacity(int capacity);
 
 int addElement(struct linkedList_type* list, void* element);
 
@@ -71,7 +67,5 @@ struct node* get(struct linkedList_type* list, int index);
 void displayNode(struct linkedList_type* list, int index);
 
 int isEmpty(struct linkedList_type* list);
-
-int isFull(struct linkedList_type* list);
 
 int size(struct linkedList_type* list);
