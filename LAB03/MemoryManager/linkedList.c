@@ -36,10 +36,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "common.h"
 #include "linkedList.h"
-
-int lastAddedNodeIndex;
 
 struct linkedList_type* linkedListCreator(){    
     log(INFO, "linkedList.c ", "Enter - create a new list", __LINE__);
@@ -138,7 +135,8 @@ int addElementAt(struct linkedList_type* list, void* element, int index){
         nodeToReplace->previous = newNode;
     }
     
-    lastAddedNodeIndex = index;
+    list->lastInsertedIndex = index;
+    list->lastInserted = newNode;
     list->size++;
     
     sprintf(debugMsg, "Element added at index : %d. List size = %d", index, list->size);

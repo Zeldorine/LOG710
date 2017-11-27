@@ -99,9 +99,12 @@
     <File Name="linkedList.c"/>
     <File Name="linkedList.h"/>
     <File Name="allocationStrategy.h"/>
-    <File Name="common.h"/>
     <VirtualDirectory Name="Test">
       <File Name="linkedListTest.c"/>
+      <File Name="allocationStrategyFirstFitTest.c"/>
+      <File Name="allocationStrategyWorstFitTest.c"/>
+      <File Name="allocationStrategyBestFitTest.c"/>
+      <File Name="allocationStrategyNextFitTest.c"/>
     </VirtualDirectory>
     <File Name="allocationStrategy.c"/>
   </VirtualDirectory>

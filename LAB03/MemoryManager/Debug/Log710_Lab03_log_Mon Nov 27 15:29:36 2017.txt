@@ -1,0 +1,43 @@
+[INFO]Mon Nov 27 15:29:36 2017	main - 31	LOG710 - LAB03 - MEMORY MANAGER 
+
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c  - 42	Enter - create a new list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 50	Exit - create a new list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c  - 42	Enter - create a new list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 50	Exit - create a new list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 74	Add an element at index : 0. List size = 0
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 81	Add element to the head of the list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 142	Element added at index : 0. List size = 1
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 302	There are 1 element
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : HOLE, start = 0, length = 128
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 199	Free memory bloc at index : 0, with attributs : start = 0, length = 128
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 320	Total free bloc :  1
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 323	Total used bloc :  0
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 326	Total free memory :  128
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 329	Max free memory bloc size :  128
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 74	Add an element at index : 0. List size = 1
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 81	Add element to the head of the list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 142	Element added at index : 0. List size = 2
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 464	Add a new memory bloc with attributs : size = 16, start = 0
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 476	Update hole memory bloc with attributs : size = 112, start = 16
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 74	Add an element at index : 0. List size = 2
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 81	Add element to the head of the list
+[INFO]Mon Nov 27 15:29:36 2017	linkedList.c - 142	Element added at index : 0. List size = 3
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 464	Add a new memory bloc with attributs : size = 32, start = 16
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 476	Update hole memory bloc with attributs : size = 80, start = 48
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 449	Cannot allocate memory with size : 256
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 449	Cannot allocate memory with size : 4
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 449	Cannot allocate memory with size : 64
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 449	Cannot allocate memory with size : 4
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 302	There are 3 element
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : Process, start = 16, length = 32
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 309	Memory bloc at index 1, bloc type : Process, start = 0, length = 16
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 309	Memory bloc at index 2, bloc type : HOLE, start = 48, length = 80
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:29:36 2017	allocationStrategy.c - 199	Free memory bloc at index : 2, with attributs : start = 48, leng

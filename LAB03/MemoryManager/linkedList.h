@@ -33,7 +33,6 @@
 *
 */
 
-#include "common.h"
 #include "logger.h"
 
 #define SUCCESS 0
@@ -52,6 +51,8 @@ struct linkedList_type{
     int size;
     struct node* head;
     struct node* tail;
+    struct node* lastInserted;
+    int lastInsertedIndex;
 };
 
 struct linkedList_type* linkedListCreator();

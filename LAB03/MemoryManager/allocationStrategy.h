@@ -25,6 +25,8 @@
 // DEFINE PART
 #define MAX_MEMORY_SIZE  2048
 #define DEBUG 0
+#define TRUE 1
+#define FALSE 0
 
 // RETURN CODE 
 #define SUCCESS 0
@@ -94,3 +96,4 @@ struct memoryBloc* allocationStrategyBestFit(int size);
 
 struct memoryBloc* allocationStrategyNextFit(int size);
 
+struct memoryBloc* addMemorybloc(int size, int index, struct memoryBloc* currentMemBloc);

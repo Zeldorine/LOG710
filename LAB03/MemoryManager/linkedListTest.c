@@ -22,7 +22,6 @@
 */
 
 #include <stdio.h>
-#include "common.h"
 #include "logger.h"
 #include "linkedList.h"
 

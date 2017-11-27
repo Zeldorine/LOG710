@@ -1,0 +1,146 @@
+[INFO]Mon Nov 27 15:54:27 2017	main - 31	LOG710 - LAB03 - MEMORY MANAGER 
+
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c  - 42	Enter - create a new list
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 50	Exit - create a new list
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c  - 42	Enter - create a new list
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 50	Exit - create a new list
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 0. List size = 0
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 81	Add element to the head of the list
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 0. List size = 1
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 302	There are 1 element
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : HOLE, start = 0, length = 128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 0, with attributs : start = 0, length = 128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 320	Total free bloc :  1
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 323	Total used bloc :  0
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 326	Total free memory :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 329	Max free memory bloc size :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 0, lastInsertedIndex: 0, size list: 1
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 0. List size = 1
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 81	Add element to the head of the list
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 0. List size = 2
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 16, start = 0
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 112, start = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 0, lastInsertedIndex: 0, size list: 2
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 1. List size = 2
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 118	Add an element at index : 1.
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 1. List size = 3
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 32, start = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 80, start = 48
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 452	Cannot allocate memory with size : 256
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 0, lastInsertedIndex: 1, size list: 3
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 2. List size = 3
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 118	Add an element at index : 2.
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 2. List size = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 4, start = 48
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 76, start = 52
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 0, lastInsertedIndex: 2, size list: 4
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 3. List size = 4
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 118	Add an element at index : 3.
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 3. List size = 5
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 64, start = 52
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 12, start = 116
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 0, lastInsertedIndex: 3, size list: 5
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 4. List size = 5
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 118	Add an element at index : 4.
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 4. List size = 6
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 4, start = 116
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 8, start = 120
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 302	There are 6 element
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : Process, start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 1, bloc type : Process, start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 2, bloc type : Process, start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 3, bloc type : Process, start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 4, bloc type : Process, start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 5, bloc type : HOLE, start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 5, with attributs : start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 320	Total free bloc :  1
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 0, with attributs : start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 1, with attributs : start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 2, with attributs : start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 3, with attributs : start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 4, with attributs : start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 323	Total used bloc :  5
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 326	Total free memory :  8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 329	Max free memory bloc size :  8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 122	free bloc with attributs : start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 302	There are 6 element
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : Process, start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 1, bloc type : HOLE, start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 2, bloc type : Process, start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 3, bloc type : Process, start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 4, bloc type : Process, start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 5, bloc type : HOLE, start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 1, with attributs : start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 5, with attributs : start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 320	Total free bloc :  2
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 0, with attributs : start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 2, with attributs : start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 3, with attributs : start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 4, with attributs : start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 323	Total used bloc :  4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 326	Total free memory :  40
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 329	Max free memory bloc size :  32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 122	free bloc with attributs : start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 302	There are 6 element
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : Process, start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 1, bloc type : HOLE, start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 2, bloc type : Process, start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 3, bloc type : HOLE, start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 4, bloc type : Process, start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 5, bloc type : HOLE, start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 1, with attributs : start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 3, with attributs : start = 52, length = 64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 5, with attributs : start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 320	Total free bloc :  3
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 0, with attributs : start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 2, with attributs : start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 4, with attributs : start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 323	Total used bloc :  3
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 326	Total free memory :  104
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 329	Max free memory bloc size :  64
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 4, lastInsertedIndex: 4, size list: 6
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 3. List size = 6
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 118	Add an element at index : 3.
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 3. List size = 7
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 50, start = 52
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 14, start = 102
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 431	Add a new memory bloc with next fit strategy
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 442	***ICI*** i: 0, lastInsertedIndex: 3, size list: 7
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 74	Add an element at index : 4. List size = 7
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 118	Add an element at index : 4.
+[INFO]Mon Nov 27 15:54:27 2017	linkedList.c - 143	Element added at index : 4. List size = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 467	Add a new memory bloc with attributs : size = 6, start = 102
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 479	Update hole memory bloc with attributs : size = 8, start = 108
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 302	There are 8 element
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 0, bloc type : Process, start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 1, bloc type : HOLE, start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 2, bloc type : Process, start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 3, bloc type : Process, start = 52, length = 50
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 4, bloc type : Process, start = 102, length = 6
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 5, bloc type : HOLE, start = 108, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 6, bloc type : Process, start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 309	Memory bloc at index 7, bloc type : HOLE, start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 317	Memory parameters - Total size :  128
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 1, with attributs : start = 16, length = 32
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 5, with attributs : start = 108, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 199	Free memory bloc at index : 7, with attributs : start = 120, length = 8
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 320	Total free bloc :  3
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 0, with attributs : start = 0, length = 16
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 2, with attributs : start = 48, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 3, with attributs : start = 52, length = 50
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 4, with attributs : start = 102, length = 6
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 218	Process memory bloc at index : 6, with attributs : start = 116, length = 4
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 323	Total used bloc :  5
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 326	Total free memory :  48
+[INFO]Mon Nov 27 15:54:27 2017	allocationStrategy.c - 329	Max free memory bloc size :  32

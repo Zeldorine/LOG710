@@ -43,8 +43,8 @@
 #include <stdlib.h>
 #include "allocationStrategy.h"
 #include "linkedList.h"
-#include "common.h"
 #include "logger.h"
+#include "limits.h"
 
 
 // Attributs
@@ -356,32 +356,7 @@ struct memoryBloc* allocationStrategyFirstFit(int size){
         struct memoryBloc* currentMemBloc = (struct memoryBloc*) currentNode->element;
         
         if(currentMemBloc->blocType == HOLE && currentMemBloc->length >= size){
-            // create bloc
-            struct memoryBloc* newBloc = malloc(sizeof(struct memoryBloc));
-            newBloc->blocType = PROCESS;
-            newBloc->length = size;
-            newBloc->start = currentMemBloc->start;
-            newBloc->blocAddress = malloc(size);
-            
-            addElementAt(memoryList, newBloc, i);
-            char debugMsg[64];
-            sprintf(debugMsg, "Add a new memory bloc with attributs : size = %d, start = %d", size, newBloc->start);
-            log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
-            
-            currentMemBloc->length = currentMemBloc->length-size;
-            
-            if(currentMemBloc->length == 0){
-                //No more space in this bloc, remove it
-                removeElementAt(memoryList, i+1);
-                free(currentMemBloc);
-                log(INFO, "allocationStrategy.c", "Remove Hole bloc because its size is 0", __LINE__);
-            } else {
-                currentMemBloc->start = newBloc->start + size;
-                sprintf(debugMsg, "Update hole memory bloc with attributs : size = %d, start = %d", currentMemBloc->length, currentMemBloc->start);
-                log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
-            }
-            
-            return newBloc;
+            return addMemorybloc(size, i, currentMemBloc);
         } else {
             continue;
         }
@@ -395,13 +370,115 @@ struct memoryBloc* allocationStrategyFirstFit(int size){
 }
 
 struct memoryBloc* allocationStrategyWorstFit(int size){
+    log(INFO, "allocationStrategy.c", "Add a new memory bloc with worst fit strategy", __LINE__);
+    char debugMsg[64];
+    int nbBloc = memoryList->size;
+    int max = -1;
+    int indexToInsert = -1;
+    struct memoryBloc* holeBloc;
     
+    for(int i=0; i<nbBloc; i++){
+        struct node* currentNode = get(memoryList, i);
+        struct memoryBloc* currentMemBloc = (struct memoryBloc*) currentNode->element;
+        
+        if(currentMemBloc->blocType == HOLE && currentMemBloc->length >= size && (currentMemBloc->length - size) > max){
+            holeBloc = currentMemBloc;
+            max = currentMemBloc->length - size;
+            indexToInsert = i;  
+        }
+    }
+    
+    if(indexToInsert == -1) {
+        // At this point, the systeme cannot allocate memory for the new process
+        sprintf(debugMsg, "Cannot allocate memory with size : %d", size);
+        log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
+        return NULL;
+    }
+    
+    return addMemorybloc(size, indexToInsert, holeBloc);
 }
 
 struct memoryBloc* allocationStrategyBestFit(int size){
+    log(INFO, "allocationStrategy.c", "Add a new memory bloc with best fit strategy", __LINE__);
+    int nbBloc = memoryList->size;
+    int min = INT_MAX;
+    int indexToInsert = -1;
+    struct memoryBloc* holeBloc;
     
+    for(int i=0; i<nbBloc; i++){
+        struct node* currentNode = get(memoryList, i);
+        struct memoryBloc* currentMemBloc = (struct memoryBloc*) currentNode->element;
+        
+        if(currentMemBloc->blocType == HOLE && currentMemBloc->length >= size && (currentMemBloc->length - size) < min){
+            holeBloc = currentMemBloc;
+            min = currentMemBloc->length - size;
+            indexToInsert = i;  
+        }
+    }
+    
+    if(indexToInsert == -1) {
+        // At this point, the systeme cannot allocate memory for the new process
+        char debugMsg[64];
+        sprintf(debugMsg, "Cannot allocate memory with size : %d", size);
+        log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
+        return NULL;
+    }
+    
+    return addMemorybloc(size, indexToInsert, holeBloc);
 }
 
 struct memoryBloc* allocationStrategyNextFit(int size){
+    log(INFO, "allocationStrategy.c", "Add a new memory bloc with next fit strategy", __LINE__);
+    struct node* lastNodeInserted = memoryList->lastInserted;
+    int nbBloc = memoryList->size;
+    char debugMsg[64];
     
+    for (int i=0; i<nbBloc; i++){
+        struct node* currentNode = lastNodeInserted->next;
+        struct memoryBloc* currentMemBloc = (struct memoryBloc*) currentNode->element;
+        
+        if(currentMemBloc->blocType == HOLE && currentMemBloc->length >= size){
+            sprintf(debugMsg, "***ICI*** i: %d, lastInsertedIndex: %d, size list: %d", i, memoryList->lastInsertedIndex, memoryList->size);
+            log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
+            
+            return addMemorybloc(size, (((i + memoryList->lastInsertedIndex) + 1) % memoryList->size), currentMemBloc);
+        } 
+        
+        lastNodeInserted = currentNode;
+    }
+    
+    // At this point, the systeme cannot allocate memory for the new process
+    sprintf(debugMsg, "Cannot allocate memory with size : %d", size);
+    log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
+    return NULL;
+}
+
+struct memoryBloc* addMemorybloc(int size, int index, struct memoryBloc* currentMemBloc){
+    // create bloc
+    struct memoryBloc* newBloc = malloc(sizeof(struct memoryBloc));
+    newBloc->blocType = PROCESS;
+    newBloc->length = size;
+    newBloc->start = currentMemBloc->start;
+    newBloc->blocAddress = malloc(size);
+    
+    addElementAt(memoryList, newBloc, index);
+    char debugMsg[64];
+    sprintf(debugMsg, "Add a new memory bloc with attributs : size = %d, start = %d", size, newBloc->start);
+    log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
+    
+    currentMemBloc->length = currentMemBloc->length-size;
+    
+    if(currentMemBloc->length == 0){
+        //No more space in this bloc, remove it
+        removeElementAt(memoryList, index+1);
+        free(currentMemBloc);
+        log(INFO, "allocationStrategy.c", "Remove Hole bloc because its size is 0", __LINE__);
+    } else {
+        currentMemBloc->start = newBloc->start + size;
+        sprintf(debugMsg, "Update hole memory bloc with attributs : size = %d, start = %d", currentMemBloc->length, currentMemBloc->start);
+        log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
+    }
+    
+ 
+    return newBloc;  
 }

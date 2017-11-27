@@ -22,53 +22,27 @@
 */
 
 #include <stdio.h>
-#include "common.h"
 #include "logger.h"
 #include "linkedList.h"
 #include "allocationStrategy.h"
 
 int main()
 {
-	initLogger();
+    testFirstFit();
+    printf("\n\n");
+    fflush(stdout);
     
-    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER \n", __LINE__);
+    testFirstFit2();
+    printf("\n\n");
+    fflush(stdout);
     
-    struct linkedList_type* linkedList = linkedListCreator(&linkedList);
+    testBestFit();
+    printf("\n\n");
+    fflush(stdout);
     
-    if(linkedList == NULL){
-        log(ERROR, "main", "main is null \n", __LINE__);
-    }
+    testWorstFit();
+    printf("\n\n");
+    fflush(stdout);
     
-    initmem(32);
-    alloumem(64);
-    
-    affiche_etat_memoire();
-    affiche_parametres_memoire(-1);
-    
-    struct memoryBloc* bloc1 = alloumem(16);
-    struct memoryBloc* bloc2 = alloumem(8);
-    struct memoryBloc* bloc3 = alloumem(16);
-    struct memoryBloc* bloc4 = alloumem(6);
-    
-    affiche_etat_memoire();
-    affiche_parametres_memoire(-1);
-    
-    liberemem(bloc2);
-    
-    affiche_etat_memoire();
-    affiche_parametres_memoire(-1);
-    
-    liberemem(bloc4);
-    
-    affiche_etat_memoire();
-    affiche_parametres_memoire(-1);
-    
-    bloc3 = alloumem(16);
-    
-    affiche_etat_memoire();
-    affiche_parametres_memoire(-1);
-    
-    closeLogger();
-   
-	return 0;
+    testNextFit();
 }
