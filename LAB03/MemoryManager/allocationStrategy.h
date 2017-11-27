@@ -61,39 +61,121 @@ struct memoryBloc {
  */
 void initmem();
 
+/**
+ * @brief 
+ * @param size
+ * @return 
+ */
 struct memoryBloc* alloumem(int size);
 
+/**
+ * @brief 
+ * @param blocToFree
+ */
 void liberemem(struct memoryBloc* blocToFree);
 
+/**
+ * @brief 
+ * @param previousBlocIndex
+ * @param nextBlocIndex
+ */
 void mergeBloc(int previousBlocIndex, int nextBlocIndex);
 
+/**
+ * @brief 
+ * @return 
+ */
 int nbloclibres();
 
+/**
+ * @brief 
+ * @return 
+ */
 int nblocalloues();
 
+/**
+ * @brief 
+ * @return 
+ */
 int memlibre();
 
+/**
+ * @brief 
+ * @return 
+ */
 int mem_pgrand_libre();
 
+/**
+ * @brief 
+ * @param maxBlocSize
+ * @return 
+ */
 int mem_small_free(int maxBlocSize);
 
+/**
+ * @brief 
+ * @param pByte
+ * @return 
+ */
 int mem_est_alloue(int pByte);
 
+/**
+ * @brief 
+ */
 void affiche_etat_memoire();
 
+/**
+ * @brief 
+ */
 void affiche_parametres_memoire();
 
+/**
+ * @brief 
+ * @param type
+ * @return 
+ */
 char* getBlocTypeName(BLOC_TYPE type);
 
+/**
+ * @brief 
+ * @param strategy
+ */
 void setAllocationStrategy(ALLOCATION_STRATEGY strategy);
 
 // All allocations strategies
+/**
+ * @brief 
+ * @param size
+ * @return 
+ */
 struct memoryBloc* allocationStrategyFirstFit(int size);
 
+
+/**
+ * @brief 
+ * @param size
+ * @return 
+ */
 struct memoryBloc* allocationStrategyWorstFit(int size);
 
+/**
+ * @brief 
+ * @param size
+ * @return 
+ */
 struct memoryBloc* allocationStrategyBestFit(int size);
 
+/**
+ * @brief 
+ * @param size
+ * @return 
+ */
 struct memoryBloc* allocationStrategyNextFit(int size);
 
+/**
+ * @brief 
+ * @param size
+ * @param index
+ * @param currentMemBloc
+ */
 struct memoryBloc* addMemorybloc(int size, int index, struct memoryBloc* currentMemBloc);

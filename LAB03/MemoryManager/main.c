@@ -16,7 +16,8 @@
 * CHANGES :
 *
 * VERSION   DATE        WHO         DETAIL
-*     1.0   13/11/2017  TC & MN      
+*     1.0   13/11/2017  TC & MN     Create file and add test for linkedlist
+*     1.1   27/11/2017  TC & MN     Add test for best, worst, first and next fit algorithm
 * 
 *
 */
@@ -26,6 +27,10 @@
 #include "linkedList.h"
 #include "allocationStrategy.h"
 
+/**
+ * @brief 
+ * @return 
+ */
 int main()
 {
     testFirstFit();

@@ -55,18 +55,62 @@ struct linkedList_type{
     int lastInsertedIndex;
 };
 
+/**
+ * @brief 
+ * @return 
+ */
 struct linkedList_type* linkedListCreator();
 
+/**
+ * @brief 
+ * @param list
+ * @param element
+ * @return 
+ */
 int addElement(struct linkedList_type* list, void* element);
 
+/**
+ * @brief 
+ * @param list
+ * @param element
+ * @param index
+ * @return 
+ */
 int addElementAt(struct linkedList_type* list, void* element, int index);
 
+/**
+ * @brief 
+ * @param list
+ * @param index
+ * @return 
+ */
 int removeElementAt(struct linkedList_type* list, int index);
 
+/**
+ * @brief 
+ * @param list
+ * @param index
+ * @return 
+ */
 struct node* get(struct linkedList_type* list, int index);
 
+/**
+ * @brief 
+ * @param list
+ * @param index
+ */
 void displayNode(struct linkedList_type* list, int index);
 
+/**
+ * @brief 
+ * @param list
+ * @return 
+ */
 int isEmpty(struct linkedList_type* list);
 
+/**
+ * @brief 
+ * @param list
+ * @return 
+ */
 int size(struct linkedList_type* list);

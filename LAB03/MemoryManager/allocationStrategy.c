@@ -35,6 +35,11 @@
 *                                       - void affiche_etat_memoire();
 *                                       - void affiche_parametres_memoire();
 *                                       - void setAllocationStrategy(ALLOCATION_STRATEGY strategy);
+*     1.2   27/11/2017  TC & MN     Add these methods :
+*                                       - struct memoryBloc* addMemorybloc(int size, int index, struct memoryBloc* currentMemBloc)
+*                                       - struct memoryBloc* allocationStrategyNextFit(int size)
+*                                       - struct memoryBloc* allocationStrategyBestFit(int size)
+*                                       - struct memoryBloc* allocationStrategyWorstFit(int size)
 * 
 *
 */

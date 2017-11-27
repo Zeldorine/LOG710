@@ -25,8 +25,16 @@
 #include "logger.h"
 #include "linkedList.h"
 
+/**
+ * @brief 
+ * @param list
+ */
 void printElement(struct linkedList_type* list);
 
+/**
+ * @brief 
+ * @return 
+ */
 int linkedListTest()
 {
 	initLogger();
@@ -97,6 +105,10 @@ int linkedListTest()
 	return 0;
 }
 
+/**
+ * @brief 
+ * @param list
+ */
 void printElement(struct linkedList_type* list){
     if(isEmpty(list)){
         log(INFO, "main.c", "List is empty", __LINE__);

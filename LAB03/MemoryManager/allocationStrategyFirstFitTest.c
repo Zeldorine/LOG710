@@ -25,6 +25,9 @@
 #include "linkedList.h"
 #include "allocationStrategy.h"
 
+/**
+ * @brief 
+ */
 void testFirstFit(){
     initLogger();
     
@@ -71,6 +74,9 @@ void testFirstFit(){
 	return 0;
 }
 
+/**
+ * @brief 
+ */
 void testFirstFit2(){
     initLogger();
     

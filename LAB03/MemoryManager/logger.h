@@ -33,10 +33,27 @@
 #define ERROR  1
 #define INFO  0
 
+/**
+ * @brief 
+ */
 void initLogger();
 
+/**
+ * @brief 
+ */
 void closeLogger();
 
+/**
+ * @brief 
+ * @return 
+ */
 char* getTimestamp();
 
+/**
+ * @brief 
+ * @param level
+ * @param tag
+ * @param message
+ * @param lineNumber
+ */
 void log(int level, const char* tag, const char* message, int lineNumber);
