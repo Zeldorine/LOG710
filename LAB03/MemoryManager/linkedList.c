@@ -275,21 +275,6 @@ struct node* get(struct linkedList_type* list, int index){
     return nodeToReturn;
 }
 
-void displayNode(struct linkedList_type* list, int index){
-    char debugMsg[128];
-    struct node* nodeToDisplay = get(list, index);
-    
-    if(nodeToDisplay == NULL){
-        sprintf(debugMsg, "Element at index %d is null", index);
-        log(INFO, "main.c", debugMsg, __LINE__);
-        return;
-    }
-    
-    int* value = (int *) nodeToDisplay->element;
-    sprintf(debugMsg, "Element at index %d is %d", index, *value);
-    log(INFO, "main.c", debugMsg, __LINE__);
-}
-
 int isEmpty(struct linkedList_type* list){
     return list->size == 0;
 }

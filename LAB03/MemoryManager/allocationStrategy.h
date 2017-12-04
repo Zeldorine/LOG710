@@ -59,7 +59,7 @@ struct memoryBloc {
 /**
  * @brief 
  */
-void initmem();
+void initmem(int size);
 
 /**
  * @brief 
