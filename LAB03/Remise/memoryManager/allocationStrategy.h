@@ -57,125 +57,126 @@ struct memoryBloc {
 };
 
 /**
- * @brief 
+ * @brief Initializes a memory space where memory blocs can be created.
+ * @param size The size of the memory space.
  */
-void initmem();
+void initmem(int size);
 
 /**
- * @brief 
- * @param size
- * @return 
+ * @brief Reserves a memory bloc of the given size.
+ * @param size The size of the desired memory bloc.
+ * @return A pointer pointing at the memory bloc.
  */
 struct memoryBloc* alloumem(int size);
 
 /**
- * @brief 
- * @param blocToFree
+ * @brief Frees the given memory bloc.
+ * @param blocToFree The memory bloc to free.
  */
 void liberemem(struct memoryBloc* blocToFree);
 
 /**
- * @brief 
- * @param previousBlocIndex
- * @param nextBlocIndex
+ * @brief Merges the given memory blocs.
+ * @param previousBlocIndex The first memory bloc to be merged.
+ * @param nextBlocIndex The second memory bloc to be merged.
  */
 void mergeBloc(int previousBlocIndex, int nextBlocIndex);
 
 /**
- * @brief 
- * @return 
+ * @brief Returns the number of free memory blocs.
+ * @return The number of free memory blocs.
  */
 int nbloclibres();
 
 /**
- * @brief 
- * @return 
+ * @brief Returns the number of memory blocs allocated.
+ * @return The number of memory blocs allocated.
  */
 int nblocalloues();
 
 /**
- * @brief 
- * @return 
+ * @brief Returns the sum of all free memory blocs' size.
+ * @return The sum of all free memory blocs' size.
  */
 int memlibre();
 
 /**
- * @brief 
- * @return 
+ * @brief Returns the size of the biggest free memory bloc.
+ * @return The size of the biggest free memory bloc.
  */
 int mem_pgrand_libre();
 
 /**
- * @brief 
- * @param maxBlocSize
- * @return 
+ * @brief Returns the number of blocs' sizes smaller than maxBlocSize.
+ * @param maxBlocSize The maximum bloc size.
+ * @return The number of blocs' sizes smaller than maxBlocSize.
  */
 int mem_small_free(int maxBlocSize);
 
 /**
- * @brief 
- * @param pByte
- * @return 
+ * @brief Returns whether or not the given byte is allocated.
+ * @param pByte The index of the given byte.
+ * @return Whether or not the given byte is allocated.
  */
 int mem_est_alloue(int pByte);
 
 /**
- * @brief 
+ * @brief Prints current's memory state.
  */
 void affiche_etat_memoire();
 
 /**
- * @brief 
+ * @brief Prints memory allocation parameters. mem_pgrand_libre(), memlibre(), nbloclibres(), nblocalloues() and mem_small_free(maxTaillePetit).
  */
 void affiche_parametres_memoire();
 
 /**
- * @brief 
- * @param type
- * @return 
+ * @brief Returns a string for the given type of the memory bloc.
+ * @param type The type of memory bloc.
+ * @return A string for the given type of memory bloc.
  */
 char* getBlocTypeName(BLOC_TYPE type);
 
 /**
- * @brief 
- * @param strategy
+ * @brief Sets the allocation strategy.
+ * @param strategy The allocation strategy to be used.
  */
 void setAllocationStrategy(ALLOCATION_STRATEGY strategy);
 
 // All allocations strategies
 /**
- * @brief 
- * @param size
- * @return 
+ * @brief Allocates a memory bloc with the First-fit allocation strategy.
+ * @param size The size of the memory bloc to allocate.
+ * @return A pointer pointing at the memory bloc.
  */
 struct memoryBloc* allocationStrategyFirstFit(int size);
 
 
 /**
- * @brief 
- * @param size
- * @return 
+ * @brief Allocates a memory bloc with the Worst-fit allocation strategy.
+ * @param size The size of the memory bloc to allocate.
+ * @return A pointer pointing at the memory bloc.
  */
 struct memoryBloc* allocationStrategyWorstFit(int size);
 
 /**
- * @brief 
- * @param size
- * @return 
+ * @brief Allocates a memory bloc with the Best-fit allocation strategy.
+ * @param size The size of the memory bloc to allocate.
+ * @return A pointer pointing at the memory bloc.
  */
 struct memoryBloc* allocationStrategyBestFit(int size);
 
 /**
- * @brief 
- * @param size
- * @return 
+ * @brief Allocates a memory bloc with the Next-fit allocation strategy.
+ * @param size The size of the memory bloc to allocate.
+ * @return A pointer pointing at the memory bloc.
  */
 struct memoryBloc* allocationStrategyNextFit(int size);
 
 /**
- * @brief 
- * @param size
- * @param index
- * @param currentMemBloc
+ * @brief Adds a memory bloc to the memory space.
+ * @param size The size of the memory bloc to be added.
+ * @param index The index within the memory space at which the memory bloc will be added.
+ * @param currentMemBloc The memory bloc to be added.
  */
 struct memoryBloc* addMemorybloc(int size, int index, struct memoryBloc* currentMemBloc);

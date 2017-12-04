@@ -26,26 +26,25 @@
 #include "linkedList.h"
 
 /**
- * @brief 
- * @param list
+ * @brief Display all node in the specified list
+ * @param list - list to print
  */
 void printElement(struct linkedList_type* list);
+
+/**
+ * @brief Display information about a node
+ * @param list - The list which contains the node
+ * @param index - index of the node to display informations
+ */
+void displayNode(struct linkedList_type* list, int index);
 
 /**
  * @brief 
  * @return 
  */
-int linkedListTest()
+void linkedListTest()
 {
-	initLogger();
-    
-    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER \n", __LINE__);
-    
     struct linkedList_type* linkedList = linkedListCreator(&linkedList);
-    
-    if(linkedList == NULL){
-        log(ERROR, "main", "main is null \n", __LINE__);
-    }
     
     printElement(linkedList);
     
@@ -99,16 +98,24 @@ int linkedListTest()
     displayNode(linkedList, 0);
     removeElementAt(linkedList, 0);
     displayNode(linkedList, 0);
-    
-    closeLogger();
-   
-	return 0;
 }
 
-/**
- * @brief 
- * @param list
- */
+
+void displayNode(struct linkedList_type* list, int index){
+    char debugMsg[128];
+    struct node* nodeToDisplay = get(list, index);
+    
+    if(nodeToDisplay == NULL){
+        sprintf(debugMsg, "Element at index %d is null", index);
+        log(INFO, "main.c", debugMsg, __LINE__);
+        return;
+    }
+    
+    int* value = (int *) nodeToDisplay->element;
+    sprintf(debugMsg, "Element at index %d is %d", index, *value);
+    log(INFO, "main.c", debugMsg, __LINE__);
+}
+
 void printElement(struct linkedList_type* list){
     if(isEmpty(list)){
         log(INFO, "main.c", "List is empty", __LINE__);

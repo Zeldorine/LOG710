@@ -30,16 +30,8 @@
  * @brief 
  */
 void testWorstFit(){
-    initLogger();
-    
-    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER \n", __LINE__);
+    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER", __LINE__);
     log(INFO, "main", "LOG710 - LAB03 - TEST WORST FIT ALGORITHM \n", __LINE__);
-    
-    struct linkedList_type* linkedList = linkedListCreator(&linkedList);
-    
-    if(linkedList == NULL){
-        log(ERROR, "main", "main is null \n", __LINE__);
-    }
     
     setAllocationStrategy(WORST_FIT);
     initmem(128);
@@ -47,6 +39,8 @@ void testWorstFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----ALLOCATION DES BLOCS-----", __LINE__);
     alloumem(16);
     struct memoryBloc* bloc2 = alloumem(32);
     alloumem(256);
@@ -57,6 +51,8 @@ void testWorstFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----LIBERATION DES BLOCS-----", __LINE__);
     liberemem(bloc2);
     
     affiche_etat_memoire();
@@ -67,10 +63,10 @@ void testWorstFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----ALLOCATION D'UN BLOC DE 24-----", __LINE__);
     alloumem(24);
     
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
-    
-    closeLogger();
 }

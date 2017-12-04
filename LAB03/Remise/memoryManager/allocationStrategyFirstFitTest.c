@@ -30,16 +30,8 @@
  * @brief 
  */
 void testFirstFit(){
-    initLogger();
-    
-    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER \n", __LINE__);
+    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER", __LINE__);
     log(INFO, "main", "LOG710 - LAB03 - TEST FIRST FIT ALGORITHM \n", __LINE__);
-    
-    struct linkedList_type* linkedList = linkedListCreator(&linkedList);
-    
-    if(linkedList == NULL){
-        log(ERROR, "main", "main is null \n", __LINE__);
-    }
     
     initmem(32);
     alloumem(64);
@@ -47,6 +39,8 @@ void testFirstFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----ALLOCATION DES BLOCS-----", __LINE__);
     alloumem(8);
     struct memoryBloc* bloc2 = alloumem(8);
     alloumem(16);
@@ -55,30 +49,36 @@ void testFirstFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----LIBERATION DES BLOCS-----", __LINE__);
     liberemem(bloc2);
     
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
+
+    mem_est_alloue(7);
+    mem_est_alloue(8);
     
     liberemem(bloc4);
+    
+    mem_small_free(6);
+    mem_small_free(9);
     
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----ALLOCATION D'UN BLOC DE 16-----", __LINE__);
     alloumem(16);
     
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
-    
-    closeLogger();
 }
 
 /**
  * @brief 
  */
 void testFirstFit2(){
-    initLogger();
-    
     log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER \n", __LINE__);
     log(INFO, "main", "LOG710 - LAB03 - TEST FIRST FIT ALGORITHM \n", __LINE__);
     
@@ -93,6 +93,8 @@ void testFirstFit2(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----ALLOCATION DES BLOCS-----", __LINE__);
     alloumem(16);
     struct memoryBloc* bloc2 = alloumem(32);
     alloumem(256);
@@ -103,6 +105,8 @@ void testFirstFit2(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----LIBERATION DES BLOCS-----", __LINE__);
     liberemem(bloc2);
     
     affiche_etat_memoire();
@@ -113,10 +117,10 @@ void testFirstFit2(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
+    log(INFO, "main.c", "\n\n", __LINE__);
+    log(INFO, "main", "-----ALLOCATION D'UN BLOC DE 24-----", __LINE__);
     alloumem(24);
     
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
-    
-    closeLogger();
 }

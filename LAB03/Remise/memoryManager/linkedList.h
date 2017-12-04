@@ -54,61 +54,54 @@ struct linkedList_type{
 };
 
 /**
- * @brief 
- * @return 
+ * @brief create a linkedlist
+ * @return a pointer on the new linkedlist
  */
 struct linkedList_type* linkedListCreator();
 
 /**
- * @brief 
- * @param list
- * @param element
- * @return 
+ * @brief Inserts the specified element in this list. Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices)
+ * @param list - The list to add an element
+ * @param element - element to be inserted
+ * @return Return true is success, otherwise, false
  */
 int addElement(struct linkedList_type* list, void* element);
 
 /**
- * @brief 
- * @param list
- * @param element
- * @param index
- * @return 
+ * @brief Inserts the specified element at the specified position in this list. Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices)
+ * @param list - The list to add an element
+ * @param element - element to be inserted
+ * @param index - index at which the specified elements is to be inserted
+ * @return Return true is success, otherwise, false
  */
 int addElementAt(struct linkedList_type* list, void* element, int index);
 
 /**
- * @brief 
- * @param list
- * @param index
- * @return 
+ * @brief Removes the element at the specified position in this list. Shifts any subsequent elements to the left (subtracts one from their indices).
+ * @param list - The list to add an element
+ * @param index - the index of the element to be removed
+ * @return Return true is success, otherwise, false
  */
 int removeElementAt(struct linkedList_type* list, int index);
 
 /**
- * @brief 
- * @param list
- * @param index
- * @return 
+ * @brief Returns the element at the specified position in this list
+ * @param list - The list to get an element
+ * @param index - index of the element to return
+ * @return the element at the specified position in this list
  */
 struct node* get(struct linkedList_type* list, int index);
 
 /**
- * @brief 
- * @param list
- * @param index
- */
-void displayNode(struct linkedList_type* list, int index);
-
-/**
- * @brief 
- * @param list
- * @return 
+ * @brief Returns true if this collection contain no elements. This implementation returns list->size == 0
+ * @param list - the list to verify if it's empty
+ * @return true if this collection contains no element
  */
 int isEmpty(struct linkedList_type* list);
 
 /**
- * @brief 
- * @param list
- * @return 
+ * @brief Returns the number of elements in this list
+ * @param list - The list to get the size
+ * @return the number of elements in this list
  */
 int size(struct linkedList_type* list);

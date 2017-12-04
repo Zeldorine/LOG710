@@ -26,10 +26,17 @@
 #include "linkedList.h"
 
 /**
- * @brief 
- * @param list
+ * @brief Display all node in the specified list
+ * @param list - list to print
  */
 void printElement(struct linkedList_type* list);
+
+/**
+ * @brief Display information about a node
+ * @param list - The list which contains the node
+ * @param index - index of the node to display informations
+ */
+void displayNode(struct linkedList_type* list, int index);
 
 /**
  * @brief 
@@ -93,11 +100,7 @@ void linkedListTest()
     displayNode(linkedList, 0);
 }
 
-/**
- * @brief Display information about a node
- * @param list - The list which contains the node
- * @param index - index of the node to display informations
- */
+
 void displayNode(struct linkedList_type* list, int index){
     char debugMsg[128];
     struct node* nodeToDisplay = get(list, index);
@@ -113,10 +116,6 @@ void displayNode(struct linkedList_type* list, int index){
     log(INFO, "main.c", debugMsg, __LINE__);
 }
 
-/**
- * @brief Display all node in the specified list
- * @param list - list to print
- */
 void printElement(struct linkedList_type* list){
     if(isEmpty(list)){
         log(INFO, "main.c", "List is empty", __LINE__);

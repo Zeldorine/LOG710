@@ -68,7 +68,7 @@ void initmem(int size){
     if(size >= 0){
         maxMemorySize = size;
     } else {
-        char debugMsg[64];
+        char debugMsg[128];
         sprintf(debugMsg, "Cannot initialize memory with size : %d. Init to default size : %d", size, MAX_MEMORY_SIZE);
         log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
     }
@@ -100,7 +100,7 @@ struct memoryBloc* alloumem(int size){
 }
 
 void liberemem(struct memoryBloc* blocToFree){
-    char debugMsg[64];
+    char debugMsg[128];
     
     if(blocToFree == NULL){
         log(INFO, "allocationStrategy.c", "Cannot remove a null bloc", __LINE__);
@@ -162,7 +162,7 @@ void liberemem(struct memoryBloc* blocToFree){
 
 
 void mergeBloc(int previousBlocIndex, int nextBlocIndex){
-    char debugMsg[64];
+    char debugMsg[128];
     sprintf(debugMsg, "Merge bloc at index : previousBlocIndex = %d, nextBlocIndex = %d", previousBlocIndex, nextBlocIndex);
     log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
     
@@ -192,7 +192,7 @@ void mergeBloc(int previousBlocIndex, int nextBlocIndex){
 }
 
 int nbloclibres(){
-    //char debugMsg[64];
+    //char debugMsg[128];
     int nbBlocFree = 0;
     
     for(int i=0; i < memoryList->size; i++){
@@ -275,7 +275,7 @@ int mem_small_free(int maxBlocSize){
 }
 
 int mem_est_alloue(int pByte){
-    char debugMsg[64];
+    char debugMsg[128];
     
     for(int i=0; i < memoryList->size; i++){
         struct node* currentNode = get(memoryList, i);
@@ -286,7 +286,7 @@ int mem_est_alloue(int pByte){
             log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
             
             if(currentMemBloc->blocType == PROCESS) {
-                return TRUE;
+                return 1;
             } else {
                 return FALSE;
             }
@@ -300,7 +300,7 @@ void affiche_etat_memoire(){
     if(isEmpty(memoryList)){
         log(INFO, "allocationStrategy.c", "List is empty", __LINE__);
     } else {
-        char debugMsg[64];
+        char debugMsg[128];
         sprintf(debugMsg, "There are %d element", memoryList->size);
         log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
                 
@@ -315,7 +315,7 @@ void affiche_etat_memoire(){
 }
 
 void affiche_parametres_memoire(int maxBlocSize){
-    char debugMsg[64];
+    char debugMsg[128];
     sprintf(debugMsg, "Memory parameters - Total size :  %d", maxMemorySize);
     log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
     
@@ -332,7 +332,7 @@ void affiche_parametres_memoire(int maxBlocSize){
     log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
 
     if(maxBlocSize > 0){
-        sprintf(debugMsg, "Max free memory bloc size :  %d", mem_small_free(maxBlocSize));
+        sprintf(debugMsg, "Available bloc with a size less than %d :  %d", maxBlocSize, mem_small_free(maxBlocSize));
         log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
     }
 }
@@ -366,7 +366,7 @@ struct memoryBloc* allocationStrategyFirstFit(int size){
     }
     
     // At this point, the systeme cannot allocate memory for the new process
-    char debugMsg[64];
+    char debugMsg[128];
     sprintf(debugMsg, "Cannot allocate memory with size : %d", size);
     log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
     return NULL;
@@ -374,7 +374,7 @@ struct memoryBloc* allocationStrategyFirstFit(int size){
 
 struct memoryBloc* allocationStrategyWorstFit(int size){
     log(INFO, "allocationStrategy.c", "Add a new memory bloc with worst fit strategy", __LINE__);
-    char debugMsg[64];
+    char debugMsg[128];
     int nbBloc = memoryList->size;
     int max = -1;
     int indexToInsert = -1;
@@ -421,7 +421,7 @@ struct memoryBloc* allocationStrategyBestFit(int size){
     
     if(indexToInsert == -1) {
         // At this point, the systeme cannot allocate memory for the new process
-        char debugMsg[64];
+        char debugMsg[128];
         sprintf(debugMsg, "Cannot allocate memory with size : %d", size);
         log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
         return NULL;
@@ -434,7 +434,7 @@ struct memoryBloc* allocationStrategyNextFit(int size){
     log(INFO, "allocationStrategy.c", "Add a new memory bloc with next fit strategy", __LINE__);
     struct node* lastNodeInserted = memoryList->lastInserted;
     int nbBloc = memoryList->size;
-    char debugMsg[64];
+    char debugMsg[128];
     
     for (int i=0; i<nbBloc; i++){
         struct node* currentNode = lastNodeInserted->next;
@@ -462,7 +462,7 @@ struct memoryBloc* addMemorybloc(int size, int index, struct memoryBloc* current
     newBloc->blocAddress = malloc(size);
     
     addElementAt(memoryList, newBloc, index);
-    char debugMsg[64];
+    char debugMsg[128];
     sprintf(debugMsg, "Add a new memory bloc with attributs : size = %d, start = %d", size, newBloc->start);
     log(INFO, "allocationStrategy.c", debugMsg, __LINE__);
     

@@ -21,8 +21,27 @@
 *
 */
 
+/**
+ * @brief A test file to test first fit method
+ */
 void testFirstFit();
+
+/**
+ * @brief A test file to test first fit method
+ */
 void testFirstFit2();
+
+/**
+ * @brief A test file to test worst fit method
+ */
 void testWorstFit();
+
+/**
+ * @brief A test file to test best fit method
+ */
 void testBestFit();
+
+/**
+ * @brief A test file to test next fit method
+ */
 void testNextFit();
