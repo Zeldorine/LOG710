@@ -54,8 +54,8 @@ struct linkedList_type{
 };
 
 /**
- * @brief create a linkedlist
- * @return a pointer on the new linkedlist
+ * @brief 
+ * @return 
  */
 struct linkedList_type* linkedListCreator();
 

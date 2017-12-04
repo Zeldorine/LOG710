@@ -105,6 +105,7 @@
       <File Name="allocationStrategyWorstFitTest.c"/>
       <File Name="allocationStrategyBestFitTest.c"/>
       <File Name="allocationStrategyNextFitTest.c"/>
+      <File Name="allocationStrategyTest.h"/>
     </VirtualDirectory>
     <File Name="allocationStrategy.c"/>
   </VirtualDirectory>

@@ -63,7 +63,7 @@ int addElementAt(struct linkedList_type* list, void* element, int index){
         return ERR_ADD_NODE;
     }
     
-    char debugMsg[128];
+    char debugMsg[64];
     
     if(index > list->size || index < 0){
         sprintf(debugMsg, "Cannot add an element at index : %d. List size = %d", index, list->size);
@@ -120,7 +120,7 @@ int addElementAt(struct linkedList_type* list, void* element, int index){
         struct node* nodeToReplace = get(list, index);
         
         if(nodeToReplace == NULL){
-            char debugMsg[128];
+            char debugMsg[64];
             sprintf(debugMsg, "Cannot add element at index %d, cannot find element to replace, it is null", index);
             log(ERROR, "linkedList.c", debugMsg, __LINE__);
             return ERR_ADD_NODE;
@@ -157,7 +157,7 @@ int removeElementAt(struct linkedList_type* list, int index){
         return ERR_REMOVE_NODE;
     }
     
-    char debugMsg[128];
+    char debugMsg[64];
     
     if(index > list->size || index < 0){
         sprintf(debugMsg, "Cannot remove an element at index : %d. List size = %d", index, list->size);
@@ -198,7 +198,7 @@ int removeElementAt(struct linkedList_type* list, int index){
         struct node* nodeToRemove = get(list, index);
         
         if(nodeToRemove == NULL){
-            char debugMsg[128];
+            char debugMsg[64];
             sprintf(debugMsg, "Cannot add element at index %d, cannot find element to replace, it is null", index);
             log(ERROR, "linkedList.c", debugMsg, __LINE__);
             return ERR_ADD_NODE;
@@ -226,7 +226,7 @@ struct node* get(struct linkedList_type* list, int index){
     
     // verify is the index is valid
     if(list->size-1 < index || index < 0){
-        char debugMsg[128];
+        char debugMsg[64];
         sprintf(debugMsg, "Cannot get element at index %d, the size is %d", index, list->size);
         log(ERROR, "linkedList.c", debugMsg, __LINE__);
         return NULL;
@@ -251,7 +251,7 @@ struct node* get(struct linkedList_type* list, int index){
             if(nodeToReturn->next != NULL) {
                 nodeToReturn = nodeToReturn->next;
             } else {
-                char debugMsg[128];
+                char debugMsg[64];
                 sprintf(debugMsg, "Cannot get element at index %d, element at %d is null", index, i);
                 log(ERROR, "linkedList.c", debugMsg, __LINE__);
                 return NULL;
@@ -264,7 +264,7 @@ struct node* get(struct linkedList_type* list, int index){
             if(nodeToReturn->previous != NULL) {
                 nodeToReturn = nodeToReturn->previous;
             } else {
-                char debugMsg[128];
+                char debugMsg[64];
                 sprintf(debugMsg, "Cannot get element at index %d, element at %d is null", index, i);
                 log(ERROR, "linkedList.c", debugMsg, __LINE__);
                 return NULL;
@@ -276,7 +276,7 @@ struct node* get(struct linkedList_type* list, int index){
 }
 
 void displayNode(struct linkedList_type* list, int index){
-    char debugMsg[128];
+    char debugMsg[64];
     struct node* nodeToDisplay = get(list, index);
     
     if(nodeToDisplay == NULL){

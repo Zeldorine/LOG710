@@ -34,8 +34,6 @@
  */
 int main()
 {
-    initLogger();
-    
     testFirstFit();
     log(INFO, "main.c", "\n\n", __LINE__);
     
@@ -49,5 +47,4 @@ int main()
     log(INFO, "main.c", "\n\n", __LINE__);
     
     testNextFit();
-    closeLogger();
 }

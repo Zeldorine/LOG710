@@ -34,26 +34,26 @@
 #define INFO  0
 
 /**
- * @brief Init the logger and create a file Log710_Lab03_log_[actualTimestamp].txt 
+ * @brief 
  */
 void initLogger();
 
 /**
- * @brief Close the logger and close the file
+ * @brief 
  */
 void closeLogger();
 
 /**
- * @brief Get the actual timestamp
- * @return the actual timestamp
+ * @brief 
+ * @return 
  */
 char* getTimestamp();
 
 /**
- * @brief Log a message
- * @param level - One of the message level identifiers, e.g., INFO
- * @param tag - A tag to identify th elog, for instance : the class name
- * @param message - The string message
- * @param lineNumber - The line in the code to retrieve the line
+ * @brief 
+ * @param level
+ * @param tag
+ * @param message
+ * @param lineNumber
  */
 void log(int level, const char* tag, const char* message, int lineNumber);

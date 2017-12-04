@@ -30,8 +30,16 @@
  * @brief 
  */
 void testNextFit(){
-    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER", __LINE__);
+    initLogger();
+    
+    log(INFO, "main", "LOG710 - LAB03 - MEMORY MANAGER \n", __LINE__);
     log(INFO, "main", "LOG710 - LAB03 - TEST NEXT FIT ALGORITHM \n", __LINE__);
+    
+    struct linkedList_type* linkedList = linkedListCreator(&linkedList);
+    
+    if(linkedList == NULL){
+        log(ERROR, "main", "main is null \n", __LINE__);
+    }
     
     setAllocationStrategy(NEXT_FIT);
     initmem(128);
@@ -39,8 +47,6 @@ void testNextFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
-    log(INFO, "main.c", "\n\n", __LINE__);
-    log(INFO, "main", "-----ALLOCATION DES BLOCS-----", __LINE__);
     alloumem(16);
     struct memoryBloc* bloc2 = alloumem(32);
     alloumem(256);
@@ -51,8 +57,6 @@ void testNextFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
-    log(INFO, "main.c", "\n\n", __LINE__);
-    log(INFO, "main", "-----LIBERATION DES BLOCS-----", __LINE__);
     liberemem(bloc2);
     
     affiche_etat_memoire();
@@ -63,11 +67,11 @@ void testNextFit(){
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
     
-    log(INFO, "main.c", "\n\n", __LINE__);
-    log(INFO, "main", "-----ALLOCATION D'UN BLOC DE 50 et de 6-----", __LINE__);
     alloumem(50);
     alloumem(6);
     
     affiche_etat_memoire();
     affiche_parametres_memoire(-1);
+    
+    closeLogger();
 }
